@@ -35,9 +35,12 @@ class controller {
           type: db.sequelize.QueryTypes.INSERT,
           transaction: transaction
         }
-      ).then(result => {
-        Response.Message = "Запись добавлена"
-      })
+      )
+    }).then(result => {
+      Response.Message = "Запись добавлена"
+    }).catch(error => {
+      Response.Error = true
+      Response.Message = "Запись не добавлена"
     })
     return Response
   }
@@ -55,9 +58,12 @@ class controller {
           type: db.sequelize.QueryTypes.UPDATE,
           transaction: transaction
         }
-      ).then(result => {
-        Response.Message = "Запись изменена"
-      })
+      )
+    }).then(result => {
+      Response.Message = "Запись изменена"
+    }).catch(error => {
+      Response.Error = true
+      Response.Message = "Запись не изменена"
     })
     return Response
   }
@@ -73,9 +79,12 @@ class controller {
         {
           type: db.sequelize.QueryTypes.DELETE,
         }
-      ).then(result => {
-        Response.Message = "Запись удалена"
-      })
+      )
+    }).then(result => {
+      Response.Message = "Запись удалена"
+    }).catch(error => {
+      Response.Error = true
+      Response.Message = "Запись не удалена"
     })
     return Response
   }

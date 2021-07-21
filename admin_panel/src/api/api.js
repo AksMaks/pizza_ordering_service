@@ -56,5 +56,11 @@ export const Products = {
   Change: (data) => Patch("/Product", data),
   Delete: (data) => Delete("/Product", data)
 }
+export const Options = {
+  Get: (data) => Get("/ProductOption", data),
+  Insert: (data) => Post("/ProductOption", data),
+  Change: (data) => Patch("/ProductOption", data),
+  Delete: (data) => Delete("/ProductOption", data)
+}
 
 

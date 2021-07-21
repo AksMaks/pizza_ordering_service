@@ -17,7 +17,7 @@ app.use('/api/Cooperation', require('./routes/Cooperation'))
 app.use('/api/Level', require('./routes/Level'))
 app.use('/api/Stock', require('./routes/Stock'))
 app.use('/api/Product', require('./routes/Product'))
-//product, product-option, list-additive (crud) 
+app.use('/api/ProductOption', require('./routes/ProductOption'))
 //order (create read)
 
 async function start() {

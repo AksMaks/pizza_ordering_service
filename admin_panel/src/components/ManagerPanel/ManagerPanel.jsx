@@ -8,6 +8,7 @@ import NavBar from './NavBar/NavBar.jsx';
 import Content from './Content.jsx';
 
 import {actionCreator as PAC, ThunkCreator as PTC} from '../../redux/ManagerReducers/Products'
+import {actionCreator as OAC, ThunkCreator as OTC} from '../../redux/ManagerReducers/Options'
 import {actionCreator as AAC, ThunkCreator as ATC} from '../../redux/ManagerReducers/Additives'
 
 import {actionCreator as BAC, ThunkCreator as BTC} from '../../redux/ManagerReducers/Branches'
@@ -25,6 +26,16 @@ const ManagerPanel = (props) => {
         formName={"ProductForm"} 
         Name={"Товары"}
         Search={"Name"}
+      />}/>
+    <Route path="/Menu/Options" render={() => 
+      <Content 
+        path="/Menu/Options"
+        data={props.Options} 
+        dispatch={props.dispatch} 
+        methods={{actionCreator: OAC, ThunkCreator: OTC}} 
+        formName={"OptionForm"} 
+        Name={"Варианты"}
+        Search={"Product"}
       />}/>
     <Route path="/Menu/Additives" render={() => 
       <Content 
@@ -55,7 +66,8 @@ let mapStateToProps = (state) => {
 		NavBar: state.NavBar,
     Branches: state.Branches,
     Additives: state.Additives,
-    Products: state.Products
+    Products: state.Products,
+    Options: state.Options
 	}
 };
 

@@ -11,6 +11,7 @@ let initialState = {
         {
             Links: [
                 {Link: "/Menu/Products", Name: "Товары"},
+                {Link: "/Menu/Options", Name: "Варианты товара"},
                 {Link: "/Menu/Additives", Name: "Добавки"},
                 {Link: "/Menu/Categories", Name: "Категории товаров"},
                 {Link: "/Menu/Stocks", Name: "Акции"}
