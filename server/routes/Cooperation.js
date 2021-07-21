@@ -18,7 +18,7 @@ router.get('/', [], (req, res) => {
 router.post('/', [], upload.Cooperation.single('Image'), (req, res) => {
   try{
     (async () => {
-      res.status(200).json(await Cooperation.Insert({...req.body, Url: req.file.path}))
+      res.status(200).json(await Cooperation.Insert({...req.body, Url: req.file? req.file.path: req.body.OldImage}))
     })()
   }catch(e){
     ErrorHandler(res, e)
@@ -28,7 +28,7 @@ router.post('/', [], upload.Cooperation.single('Image'), (req, res) => {
 router.patch('/', [], upload.Cooperation.single('Image'), (req, res) => {
   try{
     (async () => {
-      res.status(200).json(await Cooperation.Update({...req.body, Url: req.file.path}))
+      res.status(200).json(await Cooperation.Update({...req.body, Url: req.file? req.file.path: req.body.OldImage}))
     })()
   }catch(e){
     ErrorHandler(res, e)

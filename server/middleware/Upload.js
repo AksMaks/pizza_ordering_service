@@ -6,7 +6,7 @@ const storage = (path) => multer.diskStorage({
     cd(null, `uploads/${path}`)
   },
   filename(req, file, cd){
-    const date = moment().format("DDMMYYYY-HHmmss_SSS") 
+    const date = moment().format("DDMMYYYY-HHmmss_SSS")
     cd(null, date + "-" + file.originalname)
   }
 })
@@ -26,7 +26,11 @@ module.exports = {
   Additive: multer({
     storage: storage("Additive/"),
     fileFilter: fileFilter,
-    limits: limits
+    limits: limits,
+    onError : function(err, next) {
+      console.log('error Additive', err);
+      next(err);
+    }
   }),
   Comment: multer({
     storage: storage("Comment/"),
@@ -45,6 +49,11 @@ module.exports = {
   }),
   Stock: multer({
     storage: storage("Stock/"),
+    fileFilter: fileFilter,
+    limits: limits
+  }),
+  Product: multer({
+    storage: storage("Product/"),
     fileFilter: fileFilter,
     limits: limits
   })

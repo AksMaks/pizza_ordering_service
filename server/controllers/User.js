@@ -26,7 +26,7 @@ class controller{
         Response.Data.address = result
       })
       await db.sequelize.query(
-        'SELECT `id`, `Name`, `Phone`, `Password`, `IdRole`, `RoleName`, `IdLevel`, `LevelName`, `Сashback`, `Points` FROM `view_user` WHERE 1',
+        'SELECT `Id`, `Name`, `Phone`, `Password`, `IdRole`, `RoleName`, `IdLevel`, `LevelName`, `Сashback`, `Points` FROM `view_user` WHERE 1',
         {
           type: db.sequelize.QueryTypes.SELECT,
           transaction: transaction
@@ -55,7 +55,7 @@ class controller{
         Response.Data.address = result[0][0]
       })
       await db.sequelize.query(
-        'SELECT `id`, `Name`, `Phone`, `Password`, `IdRole`, `RoleName`, `IdLevel`, `LevelName`, `Сashback`, `Points` FROM `view_user` WHERE id=?',
+        'SELECT `Id`, `Name`, `Phone`, `Password`, `IdRole`, `RoleName`, `IdLevel`, `LevelName`, `Сashback`, `Points` FROM `view_user` WHERE Id=?',
         {
           replacements: [Id]
         },
@@ -82,13 +82,18 @@ class controller{
           transaction: transaction
         }
       ).then(result => {
+        console.log(result[0])
         if(result[0][0]["Password"]){
           if(bcript.compareSync(Password, result[0][0]["Password"])){
             Response.Token = createAccessToken(result[0][0]["Id"], result[0][0]["IdRole"])
+            Response.UserName = result[0][0]["Name"]
+            Response.Message = "Авторизация прошла успешно"
           }else{
+            Response.Error = true
             Response.Message = "Неверный пароль"
           }
         }else{
+          Response.Error = true
           Response.Message = "Нет такого акаунта"
         }
       })
@@ -112,7 +117,7 @@ class controller{
         }
       )
       await db.sequelize.query(
-        'SELECT Id FROM user ORDER BY id DESC LIMIT 1',
+        'SELECT Id FROM user ORDER BY Id DESC LIMIT 1',
         {
           type: db.sequelize.QueryTypes.SELECT,
           transaction: transaction

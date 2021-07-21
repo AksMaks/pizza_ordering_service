@@ -34,6 +34,9 @@ class controller {
         }
       ).then(result => {
         Response.Message = "Запись добавлена"
+      }).catch(error => {
+        Response.Error = true
+        Response.Message = "Запись не добавлена"
       })
     })
     return Response
@@ -54,6 +57,9 @@ class controller {
         }
       ).then(result => {
         Response.Message = "Запись изменена"
+      }).catch(error => {
+        Response.Error = true
+        Response.Message = "Запись не изменена"
       })
     })
     return Response
@@ -72,6 +78,9 @@ class controller {
         }
       ).then(result => {
         Response.Message = "Запись удалена"
+      }).catch(error => {
+        Response.Error = true
+        Response.Message = "Запись не удалена"
       })
     })
     return Response

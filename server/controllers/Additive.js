@@ -23,7 +23,6 @@ class controller{
     let Response = {}
     const {Name, Weight, Price, Url} = data
     
-    
     await db.sequelize.transaction(async  transaction => {
       await db.sequelize.query(
         'INSERT INTO `additive`(`Name`, `Image`, `Weight`, `Price`, `Number`) VALUES (?, ?, ?, ?, ?)', 
@@ -36,6 +35,9 @@ class controller{
         }
       ).then(result => {
         Response.Message = "Запись добавлена"
+      }).catch(error => {
+        Response.Error = true
+        Response.Message = "Запись не добавлена"
       })
     })
     return Response
@@ -56,6 +58,9 @@ class controller{
         }
       ).then(result => {
         Response.Message = "Запись изменена"
+      }).catch(error => {
+        Response.Error = true
+        Response.Message = "Запись не изменена"
       })
     })
     return Response
@@ -84,9 +89,12 @@ class controller{
         {
           type: db.sequelize.QueryTypes.DELETE,
         }
-      ).then(result => {
-        Response.Message = "Запись удалена"
-      })
+      )
+    }).then(result => {
+      Response.Message = "Запись удалена"
+    }).catch(error => {
+      Response.Error = true
+      Response.Message = "Запись не удалена"
     })
     return Response
   }
