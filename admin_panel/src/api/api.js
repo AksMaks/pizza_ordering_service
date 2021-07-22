@@ -62,5 +62,11 @@ export const Options = {
   Change: (data) => Patch("/ProductOption", data),
   Delete: (data) => Delete("/ProductOption", data)
 }
+export const Category = {
+  Get: (data) => Get("/Category", data),
+  Insert: (data) => Post("/Category", data),
+  Change: (data) => Patch("/Category", data),
+  Delete: (data) => Delete("/Category", data)
+}
 
 

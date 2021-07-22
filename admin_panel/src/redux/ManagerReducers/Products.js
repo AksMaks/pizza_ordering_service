@@ -21,6 +21,13 @@ let initialState = {
         Type: "File"
       },
       {
+        ItemName: "IdCategory",
+        Explanations: "Категория",
+        Type: "Select",
+        Options: [
+        ]
+      },
+      {
         ItemName: "Branches",
         Explanations: "Отделения",
         Type: "SelectMultiple",
@@ -33,6 +40,7 @@ let initialState = {
     Title: [
         {Name: "Название", ColumnName: "Name", Visibility: true},
         {Name: "Описание", ColumnName: "Description", Visibility: true},
+        {Name: "Категория", ColumnName: "CategoryName", Visibility: true},
         {Name: "Изображение", ColumnName: "Image", Visibility: true},
         {Name: "Отделения", ColumnName: "BranchesTable", Visibility: true}
     ],
@@ -53,7 +61,8 @@ const Reducer = (state = initialState, action) => {
 	
 	switch (action.type) {
     case "SET_DATA_P":{
-      stateCopy.InputForm.FormMainItems[3].Options = action.data.Branches.map(el => {return {Key: el.Id, Data: el.Address}})
+      stateCopy.InputForm.FormMainItems[3].Options = action.data.Category.map(el => {return {Key: el.Id, Data: el.Name}})
+      stateCopy.InputForm.FormMainItems[4].Options = action.data.Branches.map(el => {return {Key: el.Id, Data: el.Address}})
 			
       stateCopy.Table.Content = action.data.Products.map(el => {
         return {
@@ -99,6 +108,7 @@ export const ThunkCreator = {
     form.append("OldImage", Data.OldImage)
     form.append("Name", Data.Name)
     form.append("Description", Data.Description)
+    form.append("IdCategory", Data.IdCategory)
     form.append("Branches", JSON.stringify(Data.Branches))
 
     return (dispatch) => {
@@ -118,6 +128,7 @@ export const ThunkCreator = {
     form.append("OldImage", Data.OldImage)
     form.append("Name", Data.Name)
     form.append("Description", Data.Description)
+    form.append("IdCategory", Data.IdCategory)
     form.append("Branches", JSON.stringify(Data.Branches))
 
     return (dispatch) => {

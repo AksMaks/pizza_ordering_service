@@ -18,6 +18,15 @@ class controller{
         Response.Data.Branches = result
       })
       await db.sequelize.query(
+          `SELECT Id, Name FROM category WHERE 1`,
+        {
+          type: db.sequelize.QueryTypes.SELECT,
+          transaction: transaction
+        }
+      ).then(result => {
+        Response.Data.Category = result
+      })
+      await db.sequelize.query(
           `SELECT bp.IdProduct, bp.IdBranch, b.Address  FROM branch_product bp LEFT JOIN branch b ON b.Id = bp.IdBranch WHERE 1`,
         {
           type: db.sequelize.QueryTypes.SELECT,
@@ -27,7 +36,7 @@ class controller{
         Response.Data.BranchProducts = result
       })
       await db.sequelize.query(
-          `SELECT Id, Name, Description, Image FROM product WHERE 1`,
+          `SELECT p.Id, p.Name, p.Description, p.IdCategory, c.Name AS CategoryName, p.Image FROM product p INNER JOIN category c ON c.Id = p.IdCategory WHERE 1`,
         {
           type: db.sequelize.QueryTypes.SELECT,
           transaction: transaction
@@ -40,13 +49,13 @@ class controller{
   }
   Insert = async (data) => {
     let Response = {}
-    const {Name, Description, Url, Branches} = data
+    const {Name, Description, IdCategory, Url, Branches} = data
     
     await db.sequelize.transaction(async  transaction => {
       await db.sequelize.query(
-        'INSERT INTO `product`(`Name`, `Description`, `Image`, `Number`) VALUES (?, ?, ?, ?)', 
+        'INSERT INTO `product`(`Name`, `Description`, `IdCategory`, `Image`, `Number`) VALUES (?, ?, ?, ?, ?)', 
         {
-          replacements: [Name, Description, Url, 0]
+          replacements: [Name, Description, IdCategory, Url, 0]
         },
         {
           type: db.sequelize.QueryTypes.INSERT,
@@ -82,13 +91,13 @@ class controller{
   }
   Update = async (data) => {
     let Response = {}
-    const {Id, Name, Description, Url, Branches} = data
+    const {Id, Name, Description, IdCategory, Url, Branches} = data
 
     await db.sequelize.transaction(async  transaction => {
       await db.sequelize.query(
-        'UPDATE `product` SET `Name`=?,`Description`=?,`Image`=?,`Number`=? WHERE Id=?', 
+        'UPDATE `product` SET `Name`=?,`Description`=?,`IdCategory`=?,`Image`=?,`Number`=? WHERE Id=?', 
         {
-          replacements: [Name, Description, Url, 0, Id]
+          replacements: [Name, Description, IdCategory, Url, 0, Id]
         },
         {
           type: db.sequelize.QueryTypes.INSERT,

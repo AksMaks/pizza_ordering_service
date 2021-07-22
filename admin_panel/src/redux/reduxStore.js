@@ -8,6 +8,7 @@ import BranchesReducer from './ManagerReducers/Branches.js';
 import ProductsReducer from './ManagerReducers/Products.js';
 import AdditivesReducer from './ManagerReducers/Additives.js';
 import OptionsReducer from './ManagerReducers/Options.js';
+import CategoryReducer from './ManagerReducers/Category.js';
 
 let redusers = combineReducers({
   form: formReducer,
@@ -16,7 +17,8 @@ let redusers = combineReducers({
   Products: ProductsReducer,
   Additives: AdditivesReducer,
   Branches: BranchesReducer,
-  Options: OptionsReducer
+  Options: OptionsReducer,
+  Category: CategoryReducer
 });
 
 let store = createStore(redusers, applyMiddleware(thunkMiddleware));

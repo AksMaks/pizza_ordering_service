@@ -10,6 +10,7 @@ import Content from './Content.jsx';
 import {actionCreator as PAC, ThunkCreator as PTC} from '../../redux/ManagerReducers/Products'
 import {actionCreator as OAC, ThunkCreator as OTC} from '../../redux/ManagerReducers/Options'
 import {actionCreator as AAC, ThunkCreator as ATC} from '../../redux/ManagerReducers/Additives'
+import {actionCreator as CAC, ThunkCreator as CTC} from '../../redux/ManagerReducers/Category'
 
 import {actionCreator as BAC, ThunkCreator as BTC} from '../../redux/ManagerReducers/Branches'
 
@@ -47,6 +48,16 @@ const ManagerPanel = (props) => {
         Name={"Добавки"} 
         Search={"Name"}
       />}/>
+    <Route path="/Menu/Categories" render={() => 
+      <Content 
+        path="/Menu/Categories" 
+        data={props.Category} 
+        dispatch={props.dispatch} 
+        methods={{actionCreator: CAC, ThunkCreator: CTC}} 
+        formName={"CategoryForm"} 
+        Name={"Категории"} 
+        Search={"Name"}
+      />}/>
     <Route path="/Settings/Branches" render={() => 
       <Content 
         path="/Settings/Branches" 
@@ -67,7 +78,8 @@ let mapStateToProps = (state) => {
     Branches: state.Branches,
     Additives: state.Additives,
     Products: state.Products,
-    Options: state.Options
+    Options: state.Options,
+    Category: state.Category
 	}
 };
 
