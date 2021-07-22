@@ -68,5 +68,16 @@ export const Category = {
   Change: (data) => Patch("/Category", data),
   Delete: (data) => Delete("/Category", data)
 }
-
+export const Stocks = {
+  Get: (data) => Get("/Stock", data),
+  Insert: (data) => Post("/Stock", data),
+  Change: (data) => Patch("/Stock", data),
+  Delete: (data) => Delete("/Stock", data)
+}
+export const User = {
+  Get: (data) => Get("/User", data),
+  Insert: (data) => Post("/User", data),
+  Change: (data) => Patch("/User", data),
+  Delete: (data) => Delete("/User", data)
+}
 

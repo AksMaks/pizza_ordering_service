@@ -22,8 +22,7 @@ class controller{
   Insert = async (data) => {
     let Response = {}
     const {Name, DateBegin, DateEnd, Url, PromoCode} = data
-    
-    
+    console.log(data)
     await db.sequelize.transaction(async  transaction => {
       await db.sequelize.query(
         'INSERT INTO `stock`(`Name`, `DateBegin`, `DateEnd`, `Image`, `PromoCode`) VALUES (?, ?, ?, ?, ?)', 

@@ -11,6 +11,9 @@ import {actionCreator as PAC, ThunkCreator as PTC} from '../../redux/ManagerRedu
 import {actionCreator as OAC, ThunkCreator as OTC} from '../../redux/ManagerReducers/Options'
 import {actionCreator as AAC, ThunkCreator as ATC} from '../../redux/ManagerReducers/Additives'
 import {actionCreator as CAC, ThunkCreator as CTC} from '../../redux/ManagerReducers/Category'
+import {actionCreator as StocksAC, ThunkCreator as StocksTC} from '../../redux/ManagerReducers/Stocks'
+
+import {actionCreator as UsersAC, ThunkCreator as UsersTC} from '../../redux/ManagerReducers/Users'
 
 import {actionCreator as BAC, ThunkCreator as BTC} from '../../redux/ManagerReducers/Branches'
 
@@ -58,6 +61,26 @@ const ManagerPanel = (props) => {
         Name={"Категории"} 
         Search={"Name"}
       />}/>
+    <Route path="/Menu/Stocks" render={() => 
+      <Content 
+        path="/Menu/Stocks" 
+        data={props.Stocks} 
+        dispatch={props.dispatch} 
+        methods={{actionCreator: StocksAC, ThunkCreator: StocksTC}} 
+        formName={"StockFormЫ"} 
+        Name={"Акции"} 
+        Search={"Name"}
+      />}/>
+    <Route path="/Access/Workers" render={() => 
+      <Content 
+        path="/Access/Workers" 
+        data={props.Users} 
+        dispatch={props.dispatch} 
+        methods={{actionCreator: UsersAC, ThunkCreator: UsersTC}} 
+        formName={"UserFormЫ"} 
+        Name={"Пользователи"} 
+        Search={"Name"}
+      />}/>
     <Route path="/Settings/Branches" render={() => 
       <Content 
         path="/Settings/Branches" 
@@ -79,7 +102,9 @@ let mapStateToProps = (state) => {
     Additives: state.Additives,
     Products: state.Products,
     Options: state.Options,
-    Category: state.Category
+    Category: state.Category,
+    Stocks: state.Stocks,
+    Users: state.Users
 	}
 };
 

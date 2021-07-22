@@ -23,16 +23,16 @@ class controller{
         }
       ).then(result => {
         Response.Data = {}
-        Response.Data.address = result
+        Response.Data.Address = result
       })
       await db.sequelize.query(
-        'SELECT `Id`, `Name`, `Phone`, `Password`, `IdRole`, `RoleName`, `IdLevel`, `LevelName`, `Сashback`, `Points` FROM `view_user` WHERE 1',
+        'SELECT `Id`, `Name`, `Phone`, `IdRole`, `RoleName`, `IdLevel`, `LevelName`, `Сashback`, `Points` FROM `view_user` WHERE 1',
         {
           type: db.sequelize.QueryTypes.SELECT,
           transaction: transaction
         }
       ).then(result => {
-        Response.Data.user = result
+        Response.Data.Users = result
       })
     })
     return Response
@@ -52,7 +52,7 @@ class controller{
         }
       ).then(result => {
         Response.Data = {}
-        Response.Data.address = result[0][0]
+        Response.Data.Address = result[0][0]
       })
       await db.sequelize.query(
         'SELECT `Id`, `Name`, `Phone`, `Password`, `IdRole`, `RoleName`, `IdLevel`, `LevelName`, `Сashback`, `Points` FROM `view_user` WHERE Id=?',
@@ -64,7 +64,7 @@ class controller{
           transaction: transaction
         }
       ).then(result => {
-        Response.Data.user = result[0][0]
+        Response.Data.Users = result[0][0]
       })
     })
     return Response
@@ -116,6 +116,7 @@ class controller{
           transaction: transaction
         }
       )
+      /*
       await db.sequelize.query(
         'SELECT Id FROM user ORDER BY Id DESC LIMIT 1',
         {
@@ -134,6 +135,7 @@ class controller{
           }
         )
       })
+      */
     }).then(result => {
       Response.Message = "Запись добавлена"
     }).catch(error => {
@@ -157,6 +159,7 @@ class controller{
           transaction: transaction
         }
       )
+      /*
       let query = `DELETE FROM user_address WHERE IdUser = ${Id}; INSERT INTO user_address (IdUser, Address, Name) VALUES `;
       Addresses.forEach(el => {
         query += `('${Id}', '${el.Address}', '${el.Name}'),`
@@ -167,6 +170,7 @@ class controller{
           transaction: transaction
         }
       )
+      */
     }).then(result => {
       Response.Message = "Запись изменена"
     }).catch(error => {
