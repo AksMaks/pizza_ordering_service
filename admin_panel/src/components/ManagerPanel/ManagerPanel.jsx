@@ -15,6 +15,11 @@ import {actionCreator as StocksAC, ThunkCreator as StocksTC} from '../../redux/M
 
 import {actionCreator as UsersAC, ThunkCreator as UsersTC} from '../../redux/ManagerReducers/Users'
 
+import {actionCreator as CooperationsAC, ThunkCreator as CooperationsTC} from '../../redux/ManagerReducers/Cooperations'
+import {actionCreator as ContactsAC, ThunkCreator as ContactsTC} from '../../redux/ManagerReducers/Contacts'
+import {actionCreator as CommentsAC, ThunkCreator as CommentsTC} from '../../redux/ManagerReducers/Comments'
+import {actionCreator as LevelsAC, ThunkCreator as LevelsTC} from '../../redux/ManagerReducers/Levels'
+
 import {actionCreator as BAC, ThunkCreator as BTC} from '../../redux/ManagerReducers/Branches'
 
 const ManagerPanel = (props) => {
@@ -71,6 +76,46 @@ const ManagerPanel = (props) => {
         Name={"Акции"} 
         Search={"Name"}
       />}/>
+    <Route path="/Other/Comments" render={() => 
+      <Content 
+        path="/Other/Comments" 
+        data={props.Comments}
+        dispatch={props.dispatch}
+        methods={{actionCreator: CommentsAC, ThunkCreator: CommentsTC}} 
+        formName={"CommentForm"} 
+        Name={"Уровни"} 
+        Search={"Date"}
+      />}/>
+    <Route path="/Other/Contacts" render={() => 
+      <Content 
+        path="/Other/Contacts" 
+        data={props.Contacts}
+        dispatch={props.dispatch}
+        methods={{actionCreator: ContactsAC, ThunkCreator: ContactsTC}} 
+        formName={"ContactForm"} 
+        Name={"Контакты"}
+        Search={"Text"}
+      />}/>
+    <Route path="/Other/Cooperation" render={() => 
+      <Content 
+        path="/Other/Cooperation" 
+        data={props.Cooperations}
+        dispatch={props.dispatch}
+        methods={{actionCreator: CooperationsAC, ThunkCreator: CooperationsTC}} 
+        formName={"CooperationForm"} 
+        Name={"Кооперации"} 
+        Search={"Link"}
+      />}/>
+    <Route path="/Other/Levels" render={() => 
+      <Content 
+        path="/Other/Levels" 
+        data={props.Levels}
+        dispatch={props.dispatch}
+        methods={{actionCreator: LevelsAC, ThunkCreator: LevelsTC}} 
+        formName={"LevelForm"} 
+        Name={"Уровни"} 
+        Search={"Name"}
+      />}/>
     <Route path="/Access/Workers" render={() => 
       <Content 
         path="/Access/Workers" 
@@ -104,7 +149,11 @@ let mapStateToProps = (state) => {
     Options: state.Options,
     Category: state.Category,
     Stocks: state.Stocks,
-    Users: state.Users
+    Users: state.Users,
+    Levels: state.Levels,
+    Comments: state.Comments,
+    Contacts: state.Contacts,
+    Cooperations: state.Cooperations
 	}
 };
 

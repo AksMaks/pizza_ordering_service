@@ -22,7 +22,7 @@ let initialState = {
         },
         {
             Links: [
-                {Link: "/Other/Commens", Name: "Отзывы"},
+                {Link: "/Other/Comments", Name: "Отзывы"},
                 {Link: "/Other/Contacts", Name: "Контакты"},
                 {Link: "/Other/Cooperation", Name: "Кооперация"},
                 {Link: "/Other/Levels", Name: "Уровни"}

@@ -11,7 +11,12 @@ import OptionsReducer from './ManagerReducers/Options.js';
 import CategoryReducer from './ManagerReducers/Category.js';
 import StocksReducer from './ManagerReducers/Stocks.js';
 
-import UserssReducer from './ManagerReducers/Users.js';
+import UsersReducer from './ManagerReducers/Users.js';
+
+import CooperationsReducer from './ManagerReducers/Cooperations.js';
+import ContactsReducer from './ManagerReducers/Contacts.js';
+import CommentsReducer from './ManagerReducers/Comments.js';
+import LevelsReducer from './ManagerReducers/Levels.js';
 
 import BranchesReducer from './ManagerReducers/Branches.js';
 
@@ -25,7 +30,11 @@ let redusers = combineReducers({
   Options: OptionsReducer,
   Category: CategoryReducer,
   Stocks: StocksReducer,
-  Users: UserssReducer
+  Users: UsersReducer,
+  Levels: LevelsReducer,
+  Comments: CommentsReducer,
+  Contacts: ContactsReducer,
+  Cooperations: CooperationsReducer
 });
 
 let store = createStore(redusers, applyMiddleware(thunkMiddleware));

@@ -80,4 +80,27 @@ export const User = {
   Change: (data) => Patch("/User", data),
   Delete: (data) => Delete("/User", data)
 }
-
+export const Levels = {
+  Get: (data) => Get("/Level", data),
+  Insert: (data) => Post("/Level", data),
+  Change: (data) => Patch("/Level", data),
+  Delete: (data) => Delete("/Level", data)
+}
+export const Comments = {
+  Get: (data) => Get("/Comment", data),
+  Insert: (data) => Post("/Comment", data),
+  Change: (data) => Patch("/Comment", data),
+  Delete: (data) => Delete("/Comment", data)
+}
+export const Contacts = {
+  Get: (data) => Get("/Contact", data),
+  Insert: (data) => Post("/Contact", data),
+  Change: (data) => Patch("/Contact", data),
+  Delete: (data) => Delete("/Contact", data)
+}
+export const Cooperations = {
+  Get: (data) => Get("/Cooperation", data),
+  Insert: (data) => Post("/Cooperation", data),
+  Change: (data) => Patch("/Cooperation", data),
+  Delete: (data) => Delete("/Cooperation", data)
+}
