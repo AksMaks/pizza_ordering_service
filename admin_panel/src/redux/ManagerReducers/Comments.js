@@ -1,5 +1,6 @@
 import {Comments as Api} from '../../api/api.js';
 import {NotificationsAC} from '../NotificationsReducer.js';
+import {required} from '../Validates.js'
 
 let initialState = {
   InputForm: {
@@ -8,12 +9,14 @@ let initialState = {
       {
         ItemName: "Date",
         Explanations: "Дата",
-        Type: "Date"
+        Type: "Date",
+        Validate: [required]
       },
       {
         ItemName: "Image",
         Explanations: "Изображение",
-        Type: "File"
+        Type: "File",
+        Validate: [required]
       }
     ]
   },

@@ -1,5 +1,6 @@
 import {Options as Api} from '../../api/api.js';
 import {NotificationsAC} from '../NotificationsReducer.js';
+import {required} from '../Validates.js'
 
 let initialState = {
   InputForm: {
@@ -9,38 +10,45 @@ let initialState = {
         ItemName: "IdProduct",
         Explanations: "Продукт",
         Type: "Select",
-        Options: []
+        Options: [],
+        Validate: [required]
       },
       {
         ItemName: "Name",
         Explanations: "Вариант",
-        Type: "Text"
+        Type: "Text",
+        Validate: [required]
       },
       {
         ItemName: "Weight",
         Explanations: "Вес",
-        Type: "Number"
+        Type: "Number",
+        Validate: [required]
       },
       {
         ItemName: "Size",
         Explanations: "Размер",
-        Type: "Number"
+        Type: "Number",
+        Validate: [required]
       },
       {
         ItemName: "Price",
         Explanations: "Цена",
-        Type: "Number"
+        Type: "Number",
+        Validate: [required]
       },
       {
         ItemName: "Additive",
         Explanations: "Количество добавок",
-        Type: "Number"
+        Type: "Number",
+        Validate: [required]
       },
       {
         ItemName: "Additives",
         Explanations: "Доступные добавки",
         Type: "SelectMultiple",
-        Options: []
+        Options: [],
+        Validate: [required]
       }
     ]
   },

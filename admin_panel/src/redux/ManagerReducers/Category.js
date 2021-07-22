@@ -1,5 +1,6 @@
 import {Category as Api} from '../../api/api.js';
 import {NotificationsAC} from '../NotificationsReducer.js';
+import {required} from '../Validates.js'
 
 let initialState = {
   InputForm: {
@@ -8,7 +9,8 @@ let initialState = {
       {
         ItemName: "Name",
         Explanations: "Название",
-        Type: "Text"
+        Type: "Text",
+        Validate: [required]
       }
     ]
   },

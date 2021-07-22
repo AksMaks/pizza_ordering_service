@@ -1,5 +1,6 @@
 import {Additives as Api} from '../../api/api.js';
 import {NotificationsAC} from '../NotificationsReducer.js';
+import {required} from '../Validates.js'
 
 let initialState = {
   InputForm: {
@@ -8,22 +9,26 @@ let initialState = {
       {
         ItemName: "Name",
         Explanations: "Название",
-        Type: "Text"
+        Type: "Text",
+        Validate: [required]
       },
       {
         ItemName: "Image",
         Explanations: "Изображение",
-        Type: "File"
+        Type: "File",
+        Validate: [required]
       },
       {
         ItemName: "Weight",
         Explanations: "Вес",
-        Type: "Number"
+        Type: "Number",
+        Validate: [required]
       },
       {
         ItemName: "Price",
         Explanations: "Цена",
-        Type: "Number"
+        Type: "Number",
+        Validate: [required]
       }
     ]
   },

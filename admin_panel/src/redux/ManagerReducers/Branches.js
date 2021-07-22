@@ -1,5 +1,6 @@
 import {Branches as Api} from '../../api/api.js';
 import {NotificationsAC} from '../NotificationsReducer.js';
+import {required} from '../Validates.js'
 
 let initialState = {
   InputForm: {
@@ -8,22 +9,26 @@ let initialState = {
       {
         ItemName: "Address",
         Explanations: "Адрес",
-        Type: "Text"
+        Type: "Text",
+        Validate: [required]
       },
       {
         ItemName: "DeliveryArea",
         Explanations: "Площадь покрытия",
-        Type: "Text"
+        Type: "Text",
+        Validate: [required]
       },
       {
         ItemName: "Begin",
         Explanations: "Начало работы (час)",
-        Type: "Number"
+        Type: "Number",
+        Validate: [required]
       },
       {
         ItemName: "End",
         Explanations: "Конец работы (час)",
-        Type: "Number"
+        Type: "Number",
+        Validate: [required]
       },
     ]
   },

@@ -1,5 +1,6 @@
 import {Contacts as Api} from '../../api/api.js';
 import {NotificationsAC} from '../NotificationsReducer.js';
+import {required} from '../Validates.js'
 
 let initialState = {
   InputForm: {
@@ -8,22 +9,26 @@ let initialState = {
       {
         ItemName: "Text",
         Explanations: "Текст",
-        Type: "Text"
+        Type: "Text",
+        Validate: [required]
       },
       {
         ItemName: "Image",
         Explanations: "Изображение",
-        Type: "File"
+        Type: "File",
+        Validate: [required]
       },
       {
         ItemName: "Link",
         Explanations: "Ссылка",
-        Type: "Text"
+        Type: "Text",
+        Validate: [required]
       },
       {
         ItemName: "Description",
         Explanations: "Описание",
-        Type: "TextArea"
+        Type: "TextArea",
+        Validate: [required]
       }
     ]
   },

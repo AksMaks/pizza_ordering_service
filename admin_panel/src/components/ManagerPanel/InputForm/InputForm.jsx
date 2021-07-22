@@ -58,31 +58,36 @@ class FormItem extends React.Component {
                                 type={"input"}
                                 label={this.props.Explanations} 
                                 name={this.props.Name}
-                                component={renderField}/>;
+                                component={renderField}
+                                validate={this.props.Validate} />;
                 break;
             case "Password": 
                 this.state.Item = <Field
                                 type={"password"}
                                 name={this.props.Name}
-                                component={renderField}/>;
+                                component={renderField}
+                                validate={this.props.Validate} />;
                 break;
             case "TextArea": 
                 this.state.Item = <Field
                                 type={"textarea"}
                                 name={this.props.Name}
-                                component={renderField}/>;
+                                component={renderField}
+                                validate={this.props.Validate} />;
                 break;
             case "Number":
                 this.state.Item = <Field
                                 type={"number"}
                                 name={this.props.Name}
-                                 component={renderField}/>;
+                                 component={renderField}
+                                 validate={this.props.Validate} />;
                 break;
             case "Checkbox":
                 this.state.Item = <Field
                                 type={"checkbox"}
                                 name={this.props.Name}
-                                 component={renderField}/>;
+                                 component={renderField}
+                                 validate={this.props.Validate} />;
                 break;
             case "Phone":
                 this.state.Item = <Field
@@ -90,24 +95,28 @@ class FormItem extends React.Component {
                                 pattern={"[0-9]{3}-[0-9]{3}-[0-9]{4}"}
                                 label={"999-999-9999"}
                                 name={this.props.Name}
-                                component={renderField}/>;
+                                component={renderField}
+                                validate={this.props.Validate} />;
                 break;
             case "Date":
                 this.state.Item = <Field
                                 type={"datetime-local"}
                                 name={this.props.Name}
-                                component={renderField}/>;
+                                component={renderField}
+                                validate={this.props.Validate} />;
                 break;
             case "Color":
                 this.state.Item = <Field
                                 type={"color"}
                                 name={this.props.Name}
-                                component={renderField}/>;
+                                component={renderField}
+                                validate={this.props.Validate} />;
             case "File":
                 this.state.Item = <Field
                                 type={"file"}
                                 name={this.props.Name}
-                                component={FieldFileInput}/>;
+                                component={FieldFileInput}
+                                validate={this.props.Validate} />;
                 break;
             case "Select":
                 let arrOption;
@@ -121,7 +130,8 @@ class FormItem extends React.Component {
                 };
                 this.state.Item = <Field
                                     name={this.props.Name}
-                                    component={"select"}>
+                                    component={"select"}
+                                    validate={this.props.Validate}>;
                                       {arrOption}
                                   </Field>;
                 break;
@@ -130,7 +140,8 @@ class FormItem extends React.Component {
               this.state.Item = <Field
                                   multiple
                                   name={this.props.Name}
-                                  component={"select"}>
+                                  component={"select"}
+                                  validate={this.props.Validate}>;
                                       {this.props.Options.map( (el, ind) => (<option key={ind+1} value={el.Key} selected={(el.Status)? "selected": null }>{el.Data}</option>))}
                               </Field>;
                 break;
@@ -372,6 +383,7 @@ class InputPanel extends React.Component {
                                             Explanations={el.Explanations}
                                             Type={el.Type}
                                             FormType={"Main"}
+                                            Validate={el.Validate}
                                             Options={el.Options}/>
                                 
 			                     </div>)}
@@ -388,10 +400,11 @@ class InputPanel extends React.Component {
                                     onClick={this.props.reset}
                                     className={s.Reset}
                                     title="Reset form" 
-                                    src={"/Assets/Icons/InputPanel/Reset.svg"}/>
+                                    src={"/Assets/Icons/InputPanel/Reset.svg"}
+                                    disabled={this.props.pristine || this.props.submitting}/>
                             </div>
                             <div>
-                                <button className={s.Submit}>{this.props.TextSubmit}</button>
+                                <button className={s.Submit} disabled={this.props.invalid}>{this.props.TextSubmit}</button>
                             </div>
                         </div>
                         

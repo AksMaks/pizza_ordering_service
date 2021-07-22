@@ -1,5 +1,6 @@
 import {Stocks as Api} from '../../api/api.js';
 import {NotificationsAC} from '../NotificationsReducer.js';
+import {required} from '../Validates.js'
 
 let initialState = {
   InputForm: {
@@ -8,27 +9,32 @@ let initialState = {
       {
         ItemName: "Name",
         Explanations: "Название",
-        Type: "Text"
+        Type: "Text",
+        Validate: [required]
       },
       {
         ItemName: "DateBegin",
         Explanations: "Начало работа",
-        Type: "Number"
+        Type: "Number",
+        Validate: [required]
       },
       {
         ItemName: "DateEnd",
         Explanations: "Конец работы",
-        Type: "Number"
+        Type: "Number",
+        Validate: [required]
       },
       {
         ItemName: "Image",
         Explanations: "Изображение",
-        Type: "File"
+        Type: "File",
+        Validate: [required]
       },
       {
         ItemName: "PromoCode",
         Explanations: "Промокод",
-        Type: "Text"
+        Type: "Text",
+        Validate: [required]
       }
     ]
   },

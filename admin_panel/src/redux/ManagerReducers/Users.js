@@ -1,5 +1,6 @@
 import {User as Api} from '../../api/api.js';
 import {NotificationsAC} from '../NotificationsReducer.js';
+import {required} from '../Validates.js'
 
 let initialState = {
   InputForm: {
@@ -8,22 +9,26 @@ let initialState = {
       {
         ItemName: "Name",
         Explanations: "Название",
-        Type: "Text"
+        Type: "Text",
+        Validate: [required]
       },
       {
         ItemName: "Phone",
         Explanations: "Телефон",
-        Type: "Phone"
+        Type: "Phone",
+        Validate: [required]
       },
       {
         ItemName: "Password",
         Explanations: "Пароль",
-        Type: "Password"
+        Type: "Password",
+        Validate: [required]
       },
       {
         ItemName: "Points",
         Explanations: "Баланс",
-        Type: "Number"
+        Type: "Number",
+        Validate: [required]
       }
     ]
   },
