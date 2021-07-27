@@ -91,8 +91,8 @@ let mapDispatchToProps = (dispatch) => {
       axios.post('/api/User/auth', {...FormData})
         .then(function (response) {
           if(!response.data.Error){
-            localStorage.setItem("Token", response.data.Token)
-            localStorage.setItem("UserName", response.data.UserName)
+            sessionStorage.setItem("Token", response.data.Token)
+            sessionStorage.setItem("UserName", response.data.UserName)
             dispatch(NotificationsAC.SetNotification({Type: "Message", Message: response.data.Message}));
             window.location.href = "/"
           }else{

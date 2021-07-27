@@ -14,6 +14,7 @@ const createAccessToken = (Id, IdRole) => {
 class controller{
   Get = async (data) => {
     let Response = {}
+    const {user} = data
     await db.sequelize.transaction(async  transaction => {
       await db.sequelize.query(
         'SELECT `Id`, `IdUser`, `Address`, `Name` FROM `user_address` WHERE 1',
@@ -26,7 +27,10 @@ class controller{
         Response.Data.Address = result
       })
       await db.sequelize.query(
-        'SELECT `Id`, `Name`, `Phone`, `IdRole`, `RoleName`, `IdLevel`, `LevelName`, `Сashback`, `Points` FROM `view_user` WHERE 1',
+        'SELECT `Id`, `Name`, `Phone`, `IdRole`, `RoleName`, `IdLevel`, `LevelName`, `Сashback`, `Points` FROM `view_user` WHERE Id != ?',
+        {
+          replacements: [user.Id]
+        },
         {
           type: db.sequelize.QueryTypes.SELECT,
           transaction: transaction

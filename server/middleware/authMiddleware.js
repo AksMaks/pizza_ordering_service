@@ -8,9 +8,8 @@ module.exports = (req, res, next) => {
     const token = req.headers.authorization
     
     if(!token)res.json({message: "Пользователь не авторизован"})
-
-    const decodeData = jwt.verify(token, jwtSecret)
-    req.body.user = decodeData
+    
+    req.body.user = jwt.verify(token, jwtSecret)
     next()
   }catch(e){
     res.json({message: "Пользователь не авторизован"})

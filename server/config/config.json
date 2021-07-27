@@ -1,9 +1,10 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "mobile_app_db",
-    "host": "127.0.0.1",
+    "username": "shaur161_db_pizza",
+    "password": "X4r6A9a5",
+    "database": "shaur161_db_pizza",
+    "host": "136.243.147.150",
+    "port": "3310",
     "dialect": "mysql",
     "dialectOptions": {
       "multipleStatements": true

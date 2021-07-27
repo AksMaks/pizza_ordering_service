@@ -7,7 +7,7 @@ const ErrorHandler = require("../utils/ErrorHandler")
 const authMiddleware = require("../middleware/authMiddleware")
 const roleMiddleware = require("../middleware/roleMiddleware")
 
-router.get('/', [], (req, res) => {
+router.get('/', [], authMiddleware, (req, res) => {
   try{
     (async () => {
       res.status(200).json(await User.Get(req.body))
@@ -34,7 +34,7 @@ router.post('/auth', [], (req, res) => {
     ErrorHandler(res, e)
   }
 })
-router.post('/', [], (req, res) => {
+router.post('/', [], authMiddleware, (req, res) => {
   try{
     (async () => {
       res.status(200).json(await User.Insert(req.body))

@@ -10,7 +10,7 @@ const App = (props) =>{
   return (
     <div className="App">
       <Notifications/>
-      {localStorage.getItem("Token")? <ManagerPanel/>: <AuthForm/>}
+      {sessionStorage.getItem("Token")? <ManagerPanel/>: <AuthForm/>}
     </div>
   );
 }
