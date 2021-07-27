@@ -59,7 +59,7 @@ class NavBar extends React.Component {
                 )}
                 <hr/>
                 <div className={s.Footer}>
-                    <div><a href="/" className={s.Exit} onClick={() => {localStorage.removeItem("Token"); localStorage.removeItem("UserName");}}>Выйти</a></div>
+                    <div><a href="/" className={s.Exit} onClick={() => {sessionStorage.removeItem("Token"); sessionStorage.removeItem("UserName");}}>Выйти</a></div>
                 </div>
             </div>
 	   )

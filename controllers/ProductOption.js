@@ -42,7 +42,7 @@ class controller{
       await db.sequelize.query(
           `SELECT la.Id, la.IdProductOption, la.IdAdditive, a.Name AS AdditiveName FROM 
           list_additives la 
-          INNER JOIN Additive a ON a.Id = la.IdAdditive 
+          INNER JOIN additive a ON a.Id = la.IdAdditive 
           WHERE 1`,
         {
           type: db.sequelize.QueryTypes.SELECT,
