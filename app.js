@@ -7,7 +7,7 @@ const PORT = config.get("port") || 5000
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
-app.use('/', express.static('../admin_panel/build'));
+app.use('/', express.static('./admin_panel/build'));
 app.use('/static', express.static('uploads'));
 
 app.use('/api/Additive', require('./routes/Additive'))
