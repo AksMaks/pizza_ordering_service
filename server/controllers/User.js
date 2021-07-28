@@ -27,15 +27,27 @@ class controller{
         Response.Data.Address = result
       })
       await db.sequelize.query(
-        'SELECT `Id`, `Name`, `Phone`, `IdRole`, `RoleName`, `IdLevel`, `LevelName`, `Сashback`, `Points` FROM `view_user` WHERE Id != ?',
+        `SELECT user.Id AS Id,
+                user.Name AS Name,
+                user.Phone AS Phone,
+                user.Password AS Password,
+                user.IdRole AS IdRole,
+                role.Name AS RoleName,
+                user.IdLevel AS IdLevel,
+                level.Name AS LevelName,
+                level.Сashback AS Сashback,
+                user.Points AS Points 
+          FROM user 
+          LEFT JOIN role on role.Id = user.IdRole 
+          LEFT JOIN level on level.Id = user.IdLevel 
+          where user.Id != ?`,
         {
-          replacements: [user.Id]
-        },
-        {
+          replacements: [user.Id],
           type: db.sequelize.QueryTypes.SELECT,
           transaction: transaction
         }
       ).then(result => {
+        console.log({result: result})
         Response.Data.Users = result
       })
     })
@@ -113,7 +125,7 @@ class controller{
       await db.sequelize.query(
         'INSERT INTO `user`(`Name`, `Phone`, `Password`, `IdRole`, `IdLevel`, `Points`) VALUES (?, ?, ?, ?, ?, ?)', 
         {
-          replacements: [Name, Phone, hashPassword, IdRole, IdLevel, 0]
+          replacements: [Name, Phone, hashPassword, 1, 1, 0]
         },
         {
           type: db.sequelize.QueryTypes.INSERT,

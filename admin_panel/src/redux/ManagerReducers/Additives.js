@@ -37,7 +37,7 @@ let initialState = {
       {Name: "Название", ColumnName: "Name", Visibility: true},
       {Name: "Изображение", ColumnName: "Image", Visibility: true},
       {Name: "Вес", ColumnName: "Weight", Visibility: true},
-      {Name: "Цена", ColumnName: "Number", Visibility: true}
+      {Name: "Цена", ColumnName: "Price", Visibility: true}
     ],
     Content: [
       ],

@@ -83,7 +83,7 @@ const ManagerPanel = (props) => {
         dispatch={props.dispatch}
         methods={{actionCreator: CommentsAC, ThunkCreator: CommentsTC}} 
         formName={"CommentForm"} 
-        Name={"Уровни"} 
+        Name={"Отзывы"} 
         Search={"Date"}
       />}/>
     <Route path="/Other/Contacts" render={() => 

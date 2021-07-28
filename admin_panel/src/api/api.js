@@ -2,7 +2,7 @@ import * as axios from 'axios';
 
 const instance = axios.create({
     baseURL: '/api',
-    headers: {'authorization': localStorage.getItem("Token")}
+    headers: {'authorization': sessionStorage.getItem("Token")}
   })
 
 const Get = (Url, data) => instance.get(Url, data)

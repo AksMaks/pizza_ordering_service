@@ -8,7 +8,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
 app.use('/', express.static('../admin_panel/build'));
-app.use('/static', express.static('uploads'));
+app.use('/uploads', express.static('uploads'));
 
 app.use('/api/Additive', require('./routes/Additive'))
 app.use('/api/Branch', require('./routes/Branch'))

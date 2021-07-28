@@ -103,9 +103,9 @@ class Table extends React.Component {
     //строка ячеек таблицы
     TD = (rowData, Titles, Config, indTR, Composition) => {
         let arr = Titles.map((el, ind) => {
-            if(el.ColumnName === "Url"){
+            if(el.ColumnName === "Image"){
                 return (
-                    <td key={ind}><img className={s.ImageProduct} src={rowData[el.ColumnName]} alt="Изображение"/></td>
+                    <td key={ind}><img className={s.ImageProduct} src={"http://localhost:5000/"+rowData[el.ColumnName]} alt="Изображение"/></td>
                 )
             }
             return (<td key={ind}>{rowData[el.ColumnName]}</td>)

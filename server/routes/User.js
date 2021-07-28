@@ -10,6 +10,7 @@ const roleMiddleware = require("../middleware/roleMiddleware")
 router.get('/', [], authMiddleware, (req, res) => {
   try{
     (async () => {
+      console.log({authMiddleware: req.body})
       res.status(200).json(await User.Get(req.body))
     })()
   }catch(e){

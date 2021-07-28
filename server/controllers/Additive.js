@@ -45,7 +45,6 @@ class controller{
   Update = async (data) => {
     let Response = {}
     const {Id, Name, Weight, Price, Url} = data
-
     await db.sequelize.transaction(async  transaction => {
       await db.sequelize.query(
         'UPDATE `additive` SET `Name`=?,`Image`=?,`Weight`=?,`Price`=?,`Number`=? WHERE Id=?', 
@@ -57,6 +56,8 @@ class controller{
           transaction: transaction
         }
       ).then(result => {
+        if(data.OldImage !== Url) fs.removeSync(data.OldImage)
+        
         Response.Message = "Запись изменена"
       }).catch(error => {
         Response.Error = true

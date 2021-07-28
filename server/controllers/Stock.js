@@ -58,6 +58,7 @@ class controller{
         }
       )
     }).then(result => {
+      if(data.OldImage !== Url) fs.removeSync(data.OldImage)
       Response.Message = "Запись изменена"
     }).catch(error => {
       Response.Error = true
