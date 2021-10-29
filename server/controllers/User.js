@@ -1,7 +1,8 @@
 const bcript = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 let db = require("../models/index.js");
-const {jwtSecret} = require("config")
+const {jwtSecret} = require("config");
+const axios = require("axios")
 
 const createAccessToken = (Id, IdRole) => {
   let  payload = {
@@ -9,6 +10,10 @@ const createAccessToken = (Id, IdRole) => {
     IdRole: IdRole
   }
   return jwt.sign(payload, jwtSecret, {expiresIn: "24h"})
+}
+
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
 }
 
 class controller{
@@ -116,6 +121,72 @@ class controller{
     })
     return Response
   }
+  AuthApp = async (data) => {
+    let Response = {}
+    const {Phone} = data
+    let code = Math.round(getRandomArbitrary(1000, 9999)).toString()
+    let hashPassword = bcript.hashSync(code, 5)
+
+    await db.sequelize.transaction(async  transaction => {
+      await db.sequelize.query(
+        'SELECT `Id` FROM `user` WHERE Phone=? LIMIT 1',
+        {
+          replacements: [Phone]
+        },
+        {
+          transaction: transaction
+        }
+      ).then(result => {
+        if(!!result[0][0]){
+          db.sequelize.query(
+            'UPDATE `user` SET `Password`=? WHERE Id=?', 
+            {
+              replacements: [hashPassword, result[0][0]["Id"]]
+            },
+            {
+              type: db.sequelize.QueryTypes.UPDATE,
+              transaction: transaction
+            }
+          )
+        }else{
+          db.sequelize.query(
+            'INSERT INTO `user`(`Name`, `Phone`, `Password`, `IdRole`, `IdLevel`, `Points`) VALUES (?, ?, ?, ?, ?, ?)', 
+            {
+              replacements: ["Name", Phone, hashPassword, 1, 1, 0]
+            },
+            {
+              type: db.sequelize.QueryTypes.INSERT,
+              transaction: transaction
+            }
+          )
+        }
+        Response.Message = "Вам придет код для входа"
+        
+        axios.post("https://api.iqsms.ru/messages/v2/send.json", 
+          {
+            "messages": [
+                {
+                    "phone": Phone,
+                    "clientId": "1", 
+                    "text": "Код для входа в приложение: " + code
+                }
+            ], 
+            "statusQueueName": "myQueue", 
+            "showBillingDetails": true, 
+            "login": "z1635078101341", 
+            "password": "270968"
+        }).then(function (response) {
+          console.log("смс отправлена")
+        })
+      }).catch(error => {
+        console.log(error)
+        Response.Error = true
+        Response.Message = "Ошибра входа"
+      })
+    })
+    
+    return Response
+  }
   Insert = async (data) => {
     let Response = {}
     const {Name, Phone, Password, IdRole, IdLevel, Addresses} = data
@@ -132,32 +203,13 @@ class controller{
           transaction: transaction
         }
       )
-      /*
-      await db.sequelize.query(
-        'SELECT Id FROM user ORDER BY Id DESC LIMIT 1',
-        {
-          type: db.sequelize.QueryTypes.SELECT,
-          transaction: transaction
-        }
-      ).then(result => {
-        let query = "INSERT INTO `user_address`(`IdUser`, `Address`, `Name`) VALUES ";
-        Addresses.forEach(el => {
-          query += `('${result[0]["Id"]}', '${el.Address}', '${el.Name}'),`
-        });
-        db.sequelize.query(query.slice(0, -1),
-          {
-            type: db.sequelize.QueryTypes.Insert,
-            transaction: transaction
-          }
-        )
-      })
-      */
     }).then(result => {
       Response.Message = "Запись добавлена"
     }).catch(error => {
       Response.Error = true
       Response.Message = "Запись не добавлена"
     })
+    
     return Response
   }
   Update = async (data) => {

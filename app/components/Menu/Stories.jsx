@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef }  from 'react';
 import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, Alert } from 'react-native';
 import { v4 as uuidv4 } from 'uuid';
 
-const delay = 2000
+import stories from '../../store/stories';
 
 function useInterval(callback, delay) {
   const savedCallback = useRef(callback)
@@ -25,23 +25,62 @@ function useInterval(callback, delay) {
   }, [delay])
 }
 
-const Stories = (props) => {
+const BlockStories = (props) => {
   const [current, setCurrent] = useState(0);
+  const [delay, setDelay] = useState(7000)
+  const [isRunning, setIsRunning] = useState(true)
 
   useInterval(() => {
     if(current < props.data.length-1){
       setCurrent(current + 1)
     }else{
-      props.closeModal()
+      props.changeBlockStories(1)
     }
-  }, delay);
+  }, isRunning ? delay : null);
+  
+  useEffect(() => {
+    setCurrent(0)
+  }, [props.data])
+
+  const changeCurrent = (newCurrent) => {
+    if(delay == 7001){
+      setDelay(7000)
+    }else{
+      setDelay(7001)
+    }
+    if(newCurrent >= 0 && newCurrent <= props.data.length-1){
+      setCurrent(newCurrent)
+    }else{
+      if(newCurrent == -1){
+        props.changeBlockStories(-1)
+      }else{
+        props.changeBlockStories(1)
+      }
+    }
+  }
 
   return (
     <View style={styles.Container}>
-      <Image
+      {current < props.data.length && <Image
         style={styles.MainImage}
         source={{uri: props.data[current].Image}}
-      />
+      />}
+      <TouchableWithoutFeedback onPress={() => changeCurrent(current + 1)}>
+        <View style={{
+          position: "absolute",
+          width: "30%",
+          height: "100%",
+          top: 0,
+          right: 0
+        }} ></View></TouchableWithoutFeedback> 
+      <TouchableWithoutFeedback onPress={() => changeCurrent(current - 1)}>
+        <View style={{
+          position: "absolute",
+          width: "30%",
+          height: "100%",
+          top: 0,
+          left: 0
+        }} ></View></TouchableWithoutFeedback> 
       <View style={styles.StoriesProgress}>
         {props.data.map((el, ind) => {
           return (
@@ -66,7 +105,7 @@ const Stories = (props) => {
         </View>
         <TouchableWithoutFeedback onPress={() => props.closeModal()}>
           <Image
-            style={styles.Image, styles.ImageClose}
+            style={styles.ImageClose}
             source={require('../../assets/Menu/Close.png')}
           />
         </TouchableWithoutFeedback>
@@ -75,9 +114,56 @@ const Stories = (props) => {
   );
 }
 
+const Stories = (props) => {
+  const [Text, setText] = useState(0);
+  const [image, setImage] = useState(0);
+  const [currentBlock, setCurrentBlock] = useState(0); 
+  const [data, setData] = useState([stories.stock, stories.comments, stories.cooperation]); 
+
+  useEffect(() => {
+    if(props.Text == "Акции"){setText(props.Text); setImage(require('../../assets/Menu/stock.png')); setCurrentBlock(0)}
+    if(props.Text == "Отзывы"){setText(props.Text); setImage(require('../../assets/Menu/comments.png')); setCurrentBlock(1)}
+    if(props.Text == "Сотрудничество"){setText(props.Text); setImage(require('../../assets/Menu/cooperation.png')); setCurrentBlock(2)}
+  }, [])
+
+  useEffect(() => {
+    if(currentBlock == 0){setText("Акции"); setImage(require('../../assets/Menu/stock.png'))}
+    if(currentBlock == 1){setText("Отзывы"); setImage(require('../../assets/Menu/comments.png'))}
+    if(currentBlock == 2){setText("Сотрудничество"); setImage(require('../../assets/Menu/cooperation.png'))}
+  }, [currentBlock])
+
+  const changeBlockStories = (change) => {
+    if(currentBlock == 0) stories.changeActual("stock")
+    if(currentBlock == 1) stories.changeActual("comments")
+    if(currentBlock == 2) stories.changeActual("cooperation")
+
+    if(change == 1 && currentBlock < data.length-1 || change == -1 && currentBlock > 0){
+      setCurrentBlock(currentBlock + change)
+    }else{
+      props.closeModal()
+    } 
+  }
+  return (
+    <BlockStories 
+      data={data[currentBlock]} 
+      Text={Text} 
+      Image={image} 
+      closeModal={props.closeModal} 
+      changeBlockStories={changeBlockStories}
+    />
+  )
+}
+
 const styles = StyleSheet.create({
   Container:{
-    flex: 1
+    flex: 1,
+    ...Platform.select({
+      ios: {
+        marginTop: 40,
+      },
+      android: {
+      },
+    }),
   },
   StoriesProgress: {
     marginVertical: 7,
@@ -107,6 +193,10 @@ const styles = StyleSheet.create({
   Image: {
     width: 33,
     height: 33
+  },
+  ImageClose: {
+    width: 28,
+    height: 28
   },
   Text: {
     lineHeight: 33,

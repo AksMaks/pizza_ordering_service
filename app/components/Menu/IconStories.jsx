@@ -17,7 +17,7 @@ const IconStories = (props) => {
 
 const styles = StyleSheet.create({
   Container:{
-    marginRight: 15
+    marginRight: 15,
   },
   Image:{
     width: 80,
@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
   },
   Text: {
     color: "rgba(89, 89, 89, 1)",
-    fontSize: 15
+    fontSize: 15,
+    textAlign: "center"
   }
 });
 

@@ -15,6 +15,7 @@
   "author": "Maksim Aksenov <aksenovmaks2001@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.23.0",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.6",
     "express": "^4.17.1",

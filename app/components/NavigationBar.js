@@ -1,51 +1,68 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import {useRoute} from '@react-navigation/native';
+import { NavigationContainer, useNavigation} from '@react-navigation/native';
+import { observer } from "mobx-react-lite"
+import Svg, {Path} from 'react-native-svg';
 
-export default function NavigationBar({ navigation: { navigate} }) {
+import basket from '../store/basket';
+import profile from '../store/profile';
+
+const NavigationBar = observer(({ navigation: { navigate} }) => {
   const route = useRoute();
 
   return (
     <View style={styles.Bar}>
-      <TouchableWithoutFeedback onPress={() => navigate('Menu')}>
-        <View style={[styles.Link, {opacity: route.name=='Menu'? 1: 0.5}]}> 
-          <Image
-            style={styles.Image}
-            source={require('../assets/NavBar/Home.png')}
-          />
+      <TouchableWithoutFeedback onPress={() => navigate('Menu', { screen: 'Menu' })}>
+        <View style={[styles.Link, {opacity: route.name=='Menu'? 1: 0.5}]}>
+          <Svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Path d="M15.3258 5.93422C15.2385 5.85077 15.1225 5.8042 15.0018 5.8042C14.881 5.8042 14.765 5.85077 14.6777 5.93422L3.89062 16.2391C3.84481 16.2829 3.80837 16.3356 3.78349 16.3939C3.75862 16.4522 3.74583 16.515 3.7459 16.5784L3.74414 26.2499C3.74414 26.7471 3.94168 27.224 4.29332 27.5757C4.64495 27.9273 5.12186 28.1249 5.61914 28.1249H11.25C11.4986 28.1249 11.7371 28.0261 11.9129 27.8503C12.0887 27.6745 12.1875 27.436 12.1875 27.1874V19.2186C12.1875 19.0943 12.2369 18.9751 12.3248 18.8871C12.4127 18.7992 12.5319 18.7499 12.6562 18.7499H17.3437C17.4681 18.7499 17.5873 18.7992 17.6752 18.8871C17.7631 18.9751 17.8125 19.0943 17.8125 19.2186V27.1874C17.8125 27.436 17.9113 27.6745 18.0871 27.8503C18.2629 28.0261 18.5014 28.1249 18.75 28.1249H24.3785C24.8758 28.1249 25.3527 27.9273 25.7043 27.5757C26.056 27.224 26.2535 26.7471 26.2535 26.2499V16.5784C26.2536 16.515 26.2408 16.4522 26.2159 16.3939C26.191 16.3356 26.1546 16.2829 26.1088 16.2391L15.3258 5.93422Z" fill="#202020"/>
+            <Path d="M28.7642 14.3057L24.3814 10.1127V3.75C24.3814 3.50136 24.2827 3.2629 24.1068 3.08709C23.931 2.91127 23.6926 2.8125 23.4439 2.8125H20.6314C20.3828 2.8125 20.1443 2.91127 19.9685 3.08709C19.7927 3.2629 19.6939 3.50136 19.6939 3.75V5.625L16.3002 2.38008C15.9826 2.05898 15.5103 1.875 15 1.875C14.4914 1.875 14.0203 2.05898 13.7027 2.38066L1.23984 14.3045C0.875382 14.6561 0.829679 15.2344 1.16132 15.6152C1.2446 15.7114 1.34657 15.7896 1.46103 15.845C1.57548 15.9005 1.70003 15.9321 1.82709 15.9379C1.95414 15.9437 2.08105 15.9236 2.2001 15.8788C2.31914 15.834 2.42782 15.7655 2.51952 15.6774L14.6777 4.05938C14.765 3.97593 14.881 3.92935 15.0017 3.92935C15.1225 3.92935 15.2385 3.97593 15.3258 4.05938L27.4851 15.6774C27.6643 15.8491 27.9042 15.9429 28.1523 15.938C28.4004 15.9332 28.6365 15.8302 28.8088 15.6516C29.1685 15.2789 29.1387 14.6637 28.7642 14.3057Z" fill="#202020"/>
+          </Svg>
           <Text>Меню</Text>
         </View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => navigate('Profile')}>
+      <TouchableWithoutFeedback 
+        onPress={() => {
+          if(!profile.User){
+            navigate("Profile", { screen: 'Registration', params: { Text: "Для использования личного кабинета нужен ваш телефон" }})
+          }else{
+            navigate('Profile')
+          }
+        }}>
         <View style={[styles.Link, {opacity: route.name=='Profile'? 1: 0.5}]}> 
-          <Image
-            style={styles.Image}
-            source={require('../assets/NavBar/Profile.png')}
-          />
+          <Svg width="30" height="30" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Path d="M11.5 12.3846C12.7247 12.3846 13.9219 12.0214 14.9403 11.341C15.9586 10.6606 16.7523 9.6935 17.2209 8.562C17.6896 7.43051 17.8123 6.18544 17.5733 4.98425C17.3344 3.78306 16.7446 2.6797 15.8786 1.81369C15.0126 0.947678 13.9092 0.357918 12.7081 0.118986C11.5069 -0.119945 10.2618 0.00268302 9.13031 0.471364C7.99881 0.940045 7.0317 1.73373 6.35128 2.75205C5.67086 3.77037 5.30769 4.96759 5.30769 6.19231C5.30769 7.83461 5.96009 9.40965 7.12138 10.5709C8.28266 11.7322 9.8577 12.3846 11.5 12.3846ZM11.5 14.1538C7.66187 14.1538 0 16.5246 0 21.2308V24.7692H23V21.2308C23 16.5246 15.3381 14.1538 11.5 14.1538Z" fill="#202020"/>
+          </Svg>
           <Text>Профиль</Text>
         </View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={() => navigate('Contacts')}>
         <View style={[styles.Link, {opacity: route.name=='Contacts'? 1: 0.5}]}> 
-          <Image
-            style={styles.Image}
-            source={require('../assets/NavBar/Contacts.png')}
-          />
+          <Svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Path d="M11.7344 0C5.26404 0 0 5.26404 0 11.7344C0 18.2047 5.26404 23.4688 11.7344 23.4688C18.2047 23.4688 23.4688 18.2047 23.4688 11.7344C23.4688 5.26404 18.2047 0 11.7344 0ZM11.7344 4.81109C12.0361 4.81109 12.331 4.90056 12.5819 5.06818C12.8327 5.2358 13.0283 5.47405 13.1437 5.75279C13.2592 6.03154 13.2894 6.33826 13.2305 6.63417C13.1717 6.93008 13.0264 7.20189 12.813 7.41523C12.5997 7.62857 12.3279 7.77386 12.032 7.83272C11.7361 7.89158 11.4294 7.86137 11.1506 7.74591C10.8719 7.63045 10.6336 7.43493 10.466 7.18407C10.2984 6.93321 10.2089 6.63827 10.2089 6.33656C10.2089 5.93198 10.3696 5.54398 10.6557 5.25789C10.9418 4.97181 11.3298 4.81109 11.7344 4.81109V4.81109ZM15.4894 18.0709H8.44875V16.1934H11.0303V11.0303H9.15282V9.15281H12.9078V16.1934H15.4894V18.0709Z" fill="#202020"/>
+          </Svg>
           <Text>Контакты</Text>
         </View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={() => navigate('Basket')}>
-        <View style={[styles.Link, {opacity: route.name=='Basket'? 1: 0.5}]}> 
-          <Image
-            style={styles.Image}
-            source={require('../assets/NavBar/Basket.png')}
-          />
-          <Text>Корзина</Text>
+        <View style={styles.Link}>
+          <View>
+            <Svg style={{opacity: route.name=='Basket'? 1: 0.5}} width="30" height="30" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <Path d="M8.62501 23.0001C9.68356 23.0001 10.5417 22.142 10.5417 21.0834C10.5417 20.0249 9.68356 19.1667 8.62501 19.1667C7.56646 19.1667 6.70834 20.0249 6.70834 21.0834C6.70834 22.142 7.56646 23.0001 8.62501 23.0001Z" fill="#202020"/>
+              <Path d="M22.0417 23.0001C23.1002 23.0001 23.9584 22.142 23.9584 21.0834C23.9584 20.0249 23.1002 19.1667 22.0417 19.1667C20.9832 19.1667 20.125 20.0249 20.125 21.0834C20.125 22.142 20.9832 23.0001 22.0417 23.0001Z" fill="#202020"/>
+              <Path d="M25.4437 3.40089C25.3091 3.2362 25.1395 3.10356 24.9472 3.0126C24.7549 2.92164 24.5448 2.87463 24.3321 2.875H6.10279L5.73562 0.791823C5.69647 0.569926 5.58039 0.368919 5.40776 0.224111C5.23513 0.0793022 5.01699 -4.73425e-05 4.79167 2.11913e-08H0.958333C0.704167 2.11913e-08 0.460412 0.100967 0.280689 0.28069C0.100967 0.460412 0 0.704167 0 0.958333C0 1.2125 0.100967 1.45625 0.280689 1.63598C0.460412 1.8157 0.704167 1.91667 0.958333 1.91667H3.98786L6.72271 17.4165C6.76186 17.6384 6.87794 17.8394 7.05058 17.9842C7.22321 18.129 7.44134 18.2084 7.66667 18.2083H23C23.2542 18.2083 23.4979 18.1074 23.6776 17.9276C23.8574 17.7479 23.9583 17.5042 23.9583 17.25C23.9583 16.9958 23.8574 16.7521 23.6776 16.5724C23.4979 16.3926 23.2542 16.2917 23 16.2917H8.47047L8.13266 14.375H22.6071C22.9394 14.3746 23.2614 14.2593 23.5186 14.0488C23.7757 13.8383 23.9522 13.5453 24.0182 13.2196L25.7432 4.59461C25.7848 4.38587 25.7795 4.17051 25.7277 3.96408C25.6759 3.75764 25.5789 3.56528 25.4437 3.40089Z" fill="#202020"/>
+            </Svg>
+            {!!(basket.list.length) && <View style={styles.lengthBasket}>
+              <Text style={{textAlign: "center", color: "#FFFFFF", fontSize: 8}}>{basket.list.length}</Text>
+            </View>}
+          </View>
+          <Text style={{opacity: route.name=='Basket'? 1: 0.5}}>Корзина</Text>
         </View>
       </TouchableWithoutFeedback>
     </View>
   );
-}
+})
 
 const styles = StyleSheet.create({
   Bar: {
@@ -55,11 +72,23 @@ const styles = StyleSheet.create({
   },
   Link: {
     flex: 1,
-    marginTop: 5,
+    marginTop: 10,
     alignItems: "center"
   },
   Image: {
     width: 30,
-    height: 30
+    height: 30,
+    resizeMode: "contain"
+  },
+  lengthBasket: {
+    position: "absolute",
+    top: 0,
+    right: -2,
+    width: 12,
+    height: 12,
+    backgroundColor: "#BC3B28",
+    borderRadius: 6
   }
 });
+
+export default NavigationBar

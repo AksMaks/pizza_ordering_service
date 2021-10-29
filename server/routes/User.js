@@ -35,6 +35,15 @@ router.post('/auth', [], (req, res) => {
     ErrorHandler(res, e)
   }
 })
+router.post('/authApp', [], (req, res) => {
+  try{
+    (async () => {
+      res.status(200).json(await User.AuthApp(req.body))
+    })()
+  }catch(e){
+    ErrorHandler(res, e)
+  }
+})
 router.post('/', [], authMiddleware, (req, res) => {
   try{
     (async () => {

@@ -3,7 +3,7 @@
     "username": "shaur161_db_pizza",
     "password": "X4r6A9a5",
     "database": "shaur161_db_pizza",
-    "host": "136.243.147.150",
+    "host": "136.243.14.123",
     "port": "3310",
     "dialect": "mysql",
     "dialectOptions": {
