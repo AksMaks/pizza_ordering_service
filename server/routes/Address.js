@@ -7,6 +7,16 @@ const ErrorHandler = require("../utils/ErrorHandler")
 router.get('/', [], (req, res) => {
   try{
     (async () => {
+      res.status(200).json(await Address.GetAll(req.body))
+    })()
+  }catch(e){
+    ErrorHandler(res, e)
+  }
+})
+
+router.post('/get', [], (req, res) => {
+  try{
+    (async () => {
       res.status(200).json(await Address.Get(req.body))
     })()
   }catch(e){

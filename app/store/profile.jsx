@@ -4,7 +4,7 @@ class profile {
   constructor() {
     makeAutoObservable(this)
   }
-  User = false
+  User = true
 
   Id = 1 
   Name = "Вася Попов"

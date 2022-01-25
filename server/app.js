@@ -11,6 +11,7 @@ app.use('/', express.static('../admin_panel/build'));
 app.use('/uploads', express.static('uploads'));
 
 app.use('/api/Additive', require('./routes/Additive'))
+app.use('/api/Address', require('./routes/Address'))
 app.use('/api/Branch', require('./routes/Branch'))
 app.use('/api/Category', require('./routes/Category'))
 app.use('/api/User', require('./routes/User'))
@@ -21,6 +22,7 @@ app.use('/api/Level', require('./routes/Level'))
 app.use('/api/Stock', require('./routes/Stock'))
 app.use('/api/Product', require('./routes/Product'))
 app.use('/api/ProductOption', require('./routes/ProductOption'))
+app.use('/api/Order', require('./routes/Order'))
 //order (create read)
 
 async function start() {

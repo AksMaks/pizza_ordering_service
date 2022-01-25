@@ -90,6 +90,60 @@ class controller{
     })
     return Response
   }
+  GetCode = async (data) => {
+    let Response = {}
+    const {Phone} = data
+    let code = Math.round(Math.random() * (9999 - 1000) + 1000).toString()
+    let hashPassword = bcript.hashSync(code, 5)
+
+    var axios = require('axios');
+    var data = JSON.stringify({
+      "apiKey": "VXA3Pjf9wM4rtbwR4L8Doftq4atfKbKB5iPIZqMbbetYoZppoToJseyeapEv",
+      "sms": [
+        {
+          "channel": "char",
+          "phone": Phone,
+          "text": "Код подтверждения: "+code+". Никому его не сообщайте.",
+          "sender": "VIRTA"
+        }
+      ]
+    });
+
+    var config = {
+      method: 'post',
+      url: 'https://admin.p1sms.ru/apiSms/create',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+
+    axios(config)
+    .then(function (response) {
+    })
+    .catch(function (error) {
+    });
+
+
+    await db.sequelize.transaction(async  transaction => {
+      await db.sequelize.query(
+        'UPDATE `user` SET `Password`=? WHERE Phone=?',
+        {
+          replacements: [hashPassword, Phone]
+        },
+        {
+          type: db.sequelize.QueryTypes.UPDATE,
+          transaction: transaction
+        }
+      )
+    }).then(result => {
+      Response.Message = "Запись изменена"
+    }).catch(error => {
+      Response.Error = true
+      Response.Message = "Запись не изменена"
+    })
+    return Response
+  }
   Auth = async (data) => {
     let Response = {}
     const {Phone, Password} = data
@@ -121,72 +175,6 @@ class controller{
     })
     return Response
   }
-  AuthApp = async (data) => {
-    let Response = {}
-    const {Phone} = data
-    let code = Math.round(getRandomArbitrary(1000, 9999)).toString()
-    let hashPassword = bcript.hashSync(code, 5)
-
-    await db.sequelize.transaction(async  transaction => {
-      await db.sequelize.query(
-        'SELECT `Id` FROM `user` WHERE Phone=? LIMIT 1',
-        {
-          replacements: [Phone]
-        },
-        {
-          transaction: transaction
-        }
-      ).then(result => {
-        if(!!result[0][0]){
-          db.sequelize.query(
-            'UPDATE `user` SET `Password`=? WHERE Id=?', 
-            {
-              replacements: [hashPassword, result[0][0]["Id"]]
-            },
-            {
-              type: db.sequelize.QueryTypes.UPDATE,
-              transaction: transaction
-            }
-          )
-        }else{
-          db.sequelize.query(
-            'INSERT INTO `user`(`Name`, `Phone`, `Password`, `IdRole`, `IdLevel`, `Points`) VALUES (?, ?, ?, ?, ?, ?)', 
-            {
-              replacements: ["Name", Phone, hashPassword, 1, 1, 0]
-            },
-            {
-              type: db.sequelize.QueryTypes.INSERT,
-              transaction: transaction
-            }
-          )
-        }
-        Response.Message = "Вам придет код для входа"
-        
-        axios.post("https://api.iqsms.ru/messages/v2/send.json", 
-          {
-            "messages": [
-                {
-                    "phone": Phone,
-                    "clientId": "1", 
-                    "text": "Код для входа в приложение: " + code
-                }
-            ], 
-            "statusQueueName": "myQueue", 
-            "showBillingDetails": true, 
-            "login": "z1635078101341", 
-            "password": "270968"
-        }).then(function (response) {
-          console.log("смс отправлена")
-        })
-      }).catch(error => {
-        console.log(error)
-        Response.Error = true
-        Response.Message = "Ошибра входа"
-      })
-    })
-    
-    return Response
-  }
   Insert = async (data) => {
     let Response = {}
     const {Name, Phone, Password, IdRole, IdLevel, Addresses} = data
@@ -215,12 +203,13 @@ class controller{
   Update = async (data) => {
     let Response = {}
     const {Id, Name, Phone, Password, IdRole, IdLevel, Points, Addresses} = data
+    let hashPassword = bcript.hashSync(Password, 5)
 
     await db.sequelize.transaction(async  transaction => {
       await db.sequelize.query(
         'UPDATE `user` SET `Name`=?,`Phone`=?,`Password`=?,`IdRole`=?,`IdLevel`=?,`Points`=? WHERE Id=?', 
         {
-          replacements: [Name, Phone, Password, IdRole, IdLevel, Points, Id]
+          replacements: [Name, Phone, hashPassword, IdRole, IdLevel, Points, Id]
         },
         {
           type: db.sequelize.QueryTypes.UPDATE,

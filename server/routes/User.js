@@ -7,7 +7,7 @@ const ErrorHandler = require("../utils/ErrorHandler")
 const authMiddleware = require("../middleware/authMiddleware")
 const roleMiddleware = require("../middleware/roleMiddleware")
 
-router.get('/', [], authMiddleware, (req, res) => {
+router.get('/', [], (req, res) => {
   try{
     (async () => {
       console.log({authMiddleware: req.body})
@@ -17,7 +17,7 @@ router.get('/', [], authMiddleware, (req, res) => {
     ErrorHandler(res, e)
   }
 })
-router.get('/one', [], authMiddleware, (req, res) => {
+router.get('/one', [], (req, res) => {
   try{
     (async () => {
       res.status(200).json(await User.GetOne(req.body))
@@ -35,16 +35,28 @@ router.post('/auth', [], (req, res) => {
     ErrorHandler(res, e)
   }
 })
-router.post('/authApp', [], (req, res) => {
+router.post('/getCode', [], (req, res) => {
   try{
     (async () => {
-      res.status(200).json(await User.AuthApp(req.body))
+      res.status(200).json(await User.GetCode(req.body))
     })()
   }catch(e){
     ErrorHandler(res, e)
   }
 })
-router.post('/', [], authMiddleware, (req, res) => {
+router.post('/app', [], (req, res) => {
+  let code = Math.round(Math.random() * (9999 - 1000) + 1000).toString()
+  let data = {...(req.body)}
+  data.Password = code
+  try{
+    (async () => {
+      res.status(200).json(await User.Insert(data))
+    })()
+  }catch(e){
+    ErrorHandler(res, e)
+  }
+})
+router.post('/', [], (req, res) => {
   try{
     (async () => {
       res.status(200).json(await User.Insert(req.body))
@@ -53,8 +65,7 @@ router.post('/', [], authMiddleware, (req, res) => {
     ErrorHandler(res, e)
   }
 })
-
-router.patch('/', [], authMiddleware, (req, res) => {
+router.patch('/', [], (req, res) => {
   try{
     (async () => {
       res.status(200).json(await User.Update(req.body))
@@ -63,8 +74,7 @@ router.patch('/', [], authMiddleware, (req, res) => {
     ErrorHandler(res, e)
   }
 })
-
-router.delete('/', [], authMiddleware, (req, res) => {
+router.delete('/', [], (req, res) => {
   try{
     (async () => {
       res.status(200).json(await User.Delete(req.body))

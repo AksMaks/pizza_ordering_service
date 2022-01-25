@@ -3,13 +3,13 @@ const jwt = require("jsonwebtoken")
 let db = require("../models/index.js");
 
 class controller {
-  Get = async (data) => {
+  GetAll = async (data) => {
     let Response = {}
     await db.sequelize.transaction(async  transaction => {
       await db.sequelize.query(
           `
           SELECT * 
-          FROM address 
+          FROM user_address 
           WHERE 1`,
         {
           type: db.sequelize.QueryTypes.SELECT,
@@ -21,15 +21,37 @@ class controller {
     })
     return Response
   }
+  Get = async (data) => {
+    let Response = {}
+    const {IdUser} = data
+    await db.sequelize.transaction(async  transaction => {
+      await db.sequelize.query(
+          `
+          SELECT Id, IdUser, Address, Name 
+          FROM user_address 
+          WHERE IdUser = ?`,
+          {
+            replacements: [IdUser]
+          },
+          {
+          type: db.sequelize.QueryTypes.SELECT,
+          transaction: transaction
+        }
+      ).then(result => {
+        Response.Data = result[0]
+      })
+    })
+    return Response
+  }
   Insert = async (data) => {
     let Response = {}
-    const {Address, Name} = data
+    const {IdUser, Address, Name} = data
 
     await db.sequelize.transaction(async  transaction => {
       await db.sequelize.query(
-        'INSERT INTO `address` (`Address`, `Name`) VALUES (?, ?)', 
+        'INSERT INTO `user_address` (`IdUser`, `Address`, `Name`) VALUES (?, ?, ?)', 
         {
-          replacements: [Address, Name]
+          replacements: [IdUser, Address, Name]
         },
         {
           type: db.sequelize.QueryTypes.INSERT,
@@ -50,7 +72,7 @@ class controller {
 
     await db.sequelize.transaction(async  transaction => {
       await db.sequelize.query(
-        'UPDATE `address` SET `Address`=?, `Name`=? WHERE Id = ?', 
+        'UPDATE `user_address` SET `Address`=?, `Name`=? WHERE Id = ?', 
         {
           replacements: [Address, Name, Id]
         },
@@ -72,7 +94,7 @@ class controller {
     const {Id} = data
     await db.sequelize.transaction(async  transaction => {
       await db.sequelize.query(
-        'DELETE FROM `address` WHERE Id = ?',
+        'DELETE FROM `user_address` WHERE Id = ?',
         {
           replacements: [Id]
         },
