@@ -79,7 +79,7 @@ const Menu = observer((props) => {
             Text={modalStories.Text} 
             closeModal={ () => setModalStories({Visible: false, Data: []}) }/>
         </Modal>
-        <Header leftText={"PizzData"} centerText={""} rightText={profile.Points + " Б"}/>
+        <Header leftText={"PizzData"} centerText={""} rightText={profile.data.Points + " Б"}/>
         <ScrollView 
           ref={(ref) => setScrollView(ref)}
           showsVerticalScrollIndicator={false}
@@ -113,7 +113,7 @@ const Menu = observer((props) => {
           </ScrollView>
         </View>
         {
-          menu.Category.map(el => {
+          menu.Category.length > 0 && menu.Category.map(el => {
             return ( <ProductsList
               key={uuidv4()}
               Title={el.Name}

@@ -17,7 +17,7 @@ router.get('/', [], (req, res) => {
     ErrorHandler(res, e)
   }
 })
-router.get('/one', [], (req, res) => {
+router.post('/one', [], (req, res) => {
   try{
     (async () => {
       res.status(200).json(await User.GetOne(req.body))

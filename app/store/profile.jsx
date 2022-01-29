@@ -1,21 +1,23 @@
 import { makeAutoObservable } from "mobx"
+import { Profile } from "../api/api"
 
 class profile {
   constructor() {
     makeAutoObservable(this)
   }
-  User = true
-
-  Id = 1 
-  Name = "Вася Попов"
-  Phone = "+7-999-999-9999" 
-  Password = "asd" 
-  Birthday = "03.10.2021"
-  IdRole = "2" 
-  IdLevel = "1"
-  LevelName = "Начальный"
-  Сashback = "10"
-  Points= "100"
+  User = false
+  data = {
+    Id: 1,
+    Name: "Вася Попов",
+    Phone: "+7-999-999-9999",
+    Password: "asd",
+    Birthday: "03.10.2021",
+    IdRole: "2",
+    IdLevel: "1",
+    LevelName: "Начальный",
+    Сashback: "10",
+    Points: "10",
+  }
   Addresses = [
     {
       Id: 1,
@@ -40,16 +42,32 @@ class profile {
       Comment: "123"
     }
   ]
+  test = () => {
+    Profile.GetOne({Id: 33}).then((response2) => {
+      console.log(response2.Data.Users)
+    })
+  }
   //для выбора нужного адреса
   CurrentAddress = null
-  
+  //получить код
+  GetCode = (phone) => {
+    Profile.GetCode({Phone:phone}).then((response) => {})
+  }
+  //авторизация
+  Auth = (phone, pass) => {
+    Profile.Auth({Phone:phone, Password: pass}).then((response1) => {
+      Profile.GetOne({Id: response1.Id}).then((response2) => {
+        console.log(response2)
+      })
+    })
+  }
   setCurrentAddress = (newCurrentAddress) => {
     this.CurrentAddress = newCurrentAddress
   }
 
   ChangeNamePhone = (newName, newPhone) => {
-    this.Name = newName
-    this.Phone = newPhone
+    this.data.Name = newName
+    this.data.Phone = newPhone
   }
   addAddress = (newAddress, Comment) => {
     

@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx"
+import { Stories } from "../api/api"
 
 class stories {
   stock = [
@@ -56,7 +57,42 @@ class stories {
   constructor() {
     makeAutoObservable(this)
   }
-
+  GetData = () => {
+    Stories.GetStock().then((response) => {
+      this.setStock(
+        response.Data.reverse().map(el => {return{...el, Image: response.UrlServer+el.Image}})
+      )
+      this.setActual({...this.Actual, stock: response.Data.length > 0})
+    })
+    Stories.GetComment().then((response) => {
+      this.setComment(
+        response.Data.reverse().map(el => {return{...el, Image: response.UrlServer+el.Image}})
+      )
+      this.setActual({...this.Actual, comments: response.Data.length > 0})
+    })
+    Stories.GetCooperation().then((response) => {
+      this.setCooperation(
+        response.Data.reverse().map(el => {return{...el, Image: response.UrlServer+el.Image}})
+      )
+      this.setActual({...this.Actual, stock: response.Data.length > 0})
+    })
+  }
+  setStock(data){
+    this.stock = data
+    console.log("Запись новых акций")
+  }
+  setComment(data){
+    this.comments = data
+    console.log("Запись новых комментов")
+  }
+  setCooperation(data){
+    this.cooperation = data
+    console.log("Запись новых коопераций")
+  }
+  setActual(data){
+    this.data = data
+  }
+  
   changeActual(block){
     this.Actual[block] = false
   }

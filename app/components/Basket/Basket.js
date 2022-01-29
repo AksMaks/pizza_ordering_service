@@ -41,7 +41,7 @@ const Basket = observer(() => {
   } else {
   return (
     <View style={styles.container}>
-      <Header leftText={"PizzData"} centerText={""} rightText={profile.Points + " Б"}/>
+      <Header leftText={"PizzData"} centerText={""} rightText={profile.data.Points + " Б"}/>
       <ScrollView showsVerticalScrollIndicator={false}>
         {basket.list.map((el, ind) => {
           return (

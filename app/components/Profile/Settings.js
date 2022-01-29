@@ -15,8 +15,8 @@ import profile from '../../store/profile';
 
 const Settings = observer(() => {
   const navigation = useNavigation();
-  const [Name, setName] = useState(profile.Name)
-  const [Phone, setPhone] = useState(profile.Name)
+  const [Name, setName] = useState(profile.data.Name)
+  const [Phone, setPhone] = useState(profile.data.Phone)
 
   let [fontsLoaded] = useFonts({
     Raleway_600SemiBold
@@ -42,14 +42,16 @@ const Settings = observer(() => {
           maxLength={100}
         />
       </View>
+      {false &&
       <View style={styles.Item}>
         <Text style={styles.ItemText}>День рождения</Text>
         <TextInput
           style={styles.Iteminput}
           onChangeText={() => Alert.alert("Уведовление", "В день рождения мы дарим скидку 10%. К сожажению, его нельзя изменить.")}
-          value={profile.Birthday}
+          value={profile.data.Birthday}
         />
       </View>
+      }
       <View style={styles.Item}>
         <Text style={styles.ItemText}>Телефон</Text>
         <TextInput

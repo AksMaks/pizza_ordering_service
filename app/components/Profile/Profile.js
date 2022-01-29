@@ -24,9 +24,9 @@ const Profile = observer(({ navigation: { navigate} }) => {
   } else {
   return (
     <View style={styles.container}>
-      <Header leftText={"PizzData"} centerText={""} rightText={profile.Points + " Б"}/>
+      <Header leftText={"PizzData"} centerText={""} rightText={profile.data.Points + " Б"}/>
       <View style={{flexDirection: "row", justifyContent: "space-between", heightL: 50}}>
-        <Text style={styles.Name}>{profile.Name}</Text>
+        <Text style={styles.Name}>{profile.data.Name}</Text>
         <TouchableWithoutFeedback onPress={() => navigate('Settings')}>
           <Image
               style={styles.ImageSettings}

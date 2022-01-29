@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx"
+import { Product } from "../api/api"
 
 class menu {
   /*
@@ -43,31 +44,12 @@ class menu {
     }
   ]
   */
+  
   BranchProducts = [
     {
         "IdProduct": 11,
         "IdBranch": 9,
         "Address": "popova 1"
-    },
-    {
-        "IdProduct": 11,
-        "IdBranch": 10,
-        "Address": "perm 2"
-    },
-    {
-        "IdProduct": 12,
-        "IdBranch": 10,
-        "Address": "perm 2"
-    },
-    {
-        "IdProduct": 13,
-        "IdBranch": 9,
-        "Address": "popova 1"
-    },
-    {
-        "IdProduct": 13,
-        "IdBranch": 10,
-        "Address": "perm 2"
     }
   ]
   Branches = [
@@ -84,18 +66,6 @@ class menu {
     {
       "Id": 1,
       "Name": "Напитки"
-    },
-    {
-      "Id": 2,
-      "Name": "Пиццы"
-    },
-    {
-      "Id": 3,
-      "Name": "Напитки1"
-    },
-    {
-      "Id": 3,
-      "Name": "Напитки2"
     }
   ]
   Products = [
@@ -126,430 +96,56 @@ class menu {
           Additives: []
         }
       ]
-    },
-    {
-      "Id": 10,
-      "Name": "Кола1",
-      "Description": "Coca cola",
-      "IdCategory": 1,
-      "CategoryName": "Напитки",
-      "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-      Options: [
-        {
-          "Id": 13,
-          "Name": "1 литр",
-          "Weight": 1000,
-          "Size": 25,
-          "Price": 100,
-          "Additive": 3,
-          Additives: []
-        },
-        {
-          "Id": 14,
-          "Name": "2 литка",
-          "Weight": 2000,
-          "Size": 50,
-          "Price": 200,
-          "Additive": 2,
-          Additives: []
-        }
-      ]
-    },
-    {
-      "Id": 11,
-      "Name": "Пицца колбасная",
-      "Description": 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.',
-      "IdCategory": 2,
-      "CategoryName": "Пиццы",
-      "Image": "https://sun9-39.userapi.com/impg/TFoGPMxwVD5Ige-fR2i7W7oFJjHjaikQ6AiYZQ/PRESMDWsOr4.jpg?size=292x292&quality=96&sign=d3f8e0440f94de30ad0bfd06ac80a528&type=album",
-      Options: [
-        {
-          "Id": 13,
-          "Name": "Средняя",
-          "Weight": 350,
-          "Size": 25,
-          "Price": 150,
-          "Additive": 3,
-          Additives: [
-            {
-              "Id": 9,
-              "Name": "Лук",
-              "Image": "https://w7.pngwing.com/pngs/800/247/png-transparent-onion-fortune-cookie-taco-bell-ingredient-computer-icons-onions-food-leaf-branch.png",
-              "Weight": 10,
-              "Price": 10,
-              "Number": 0
-            },
-            {
-              "Id": 10,
-              "Name": "Мясо",
-              "Image": "https://img2.freepng.ru/20180314/xoe/kisspng-ham-prosciutto-meat-clip-art-ham-radio-clipart-5aa9d37ebb3ba0.5501563715210791667669.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 11,
-              "Name": "Мясо1",
-              "Image": "https://img2.freepng.ru/20180314/xoe/kisspng-ham-prosciutto-meat-clip-art-ham-radio-clipart-5aa9d37ebb3ba0.5501563715210791667669.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 12,
-              "Name": "Мясо2",
-              "Image": "https://img2.freepng.ru/20180314/xoe/kisspng-ham-prosciutto-meat-clip-art-ham-radio-clipart-5aa9d37ebb3ba0.5501563715210791667669.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 13,
-              "Name": "Мясо3",
-              "Image": "https://img2.freepng.ru/20180314/xoe/kisspng-ham-prosciutto-meat-clip-art-ham-radio-clipart-5aa9d37ebb3ba0.5501563715210791667669.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            }
-          ]
-        },
-        {
-          "Id": 14,
-          "Name": "Малая",
-          "Weight": 200,
-          "Size": 20,
-          "Price": 10,
-          "Additive": 2,
-          Additives: [
-            {
-              "Id": 9,
-              "Name": "Лук",
-              "Image": "https://w7.pngwing.com/pngs/800/247/png-transparent-onion-fortune-cookie-taco-bell-ingredient-computer-icons-onions-food-leaf-branch.png",
-              "Weight": 10,
-              "Price": 10,
-              "Number": 0
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Id": 12,
-      "Name": "Пицца колбасная 12" ,
-      "Description": 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.',
-      "IdCategory": 2,
-      "CategoryName": "Пиццы",
-      "Image": "https://sun9-39.userapi.com/impg/TFoGPMxwVD5Ige-fR2i7W7oFJjHjaikQ6AiYZQ/PRESMDWsOr4.jpg?size=292x292&quality=96&sign=d3f8e0440f94de30ad0bfd06ac80a528&type=album",
-      Options: [
-        {
-          "Id": 13,
-          "Name": "Средняя",
-          "Weight": 350,
-          "Size": 25,
-          "Price": 150,
-          "Additive": 3,
-          Additives: [
-            {
-              "Id": 9,
-              "Name": "Лук",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 10,
-              "Price": 10,
-              "Number": 0
-            },
-            {
-              "Id": 10,
-              "Name": "Мясо",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 11,
-              "Name": "Мясо1",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 12,
-              "Name": "Мясо2",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 13,
-              "Name": "Мясо3",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            }
-          ]
-        },
-        {
-          "Id": 14,
-          "Name": "Малая",
-          "Weight": 200,
-          "Size": 20,
-          "Price": 100,
-          "Additive": 2,
-          Additives: [
-            {
-              "Id": 9,
-              "Name": "Лук",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 10,
-              "Price": 10,
-              "Number": 1
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Id": 13,
-      "Name": "Пицца колбасная 13",
-      "Description": 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.',
-      "IdCategory": 2,
-      "CategoryName": "Пиццы",
-      "Image": "https://sun9-39.userapi.com/impg/TFoGPMxwVD5Ige-fR2i7W7oFJjHjaikQ6AiYZQ/PRESMDWsOr4.jpg?size=292x292&quality=96&sign=d3f8e0440f94de30ad0bfd06ac80a528&type=album",
-      Options: [
-        {
-          "Id": 13,
-          "Name": "Средняя",
-          "Weight": 350,
-          "Size": 25,
-          "Price": 150,
-          "Additive": 3,
-          Additives: [
-            {
-              "Id": 9,
-              "Name": "Лук",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 10,
-              "Price": 10,
-              "Number": 0
-            },
-            {
-              "Id": 10,
-              "Name": "Мясо",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 11,
-              "Name": "Мясо1",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 12,
-              "Name": "Мясо2",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 13,
-              "Name": "Мясо3",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            }
-          ]
-        },
-        {
-          "Id": 14,
-          "Name": "Малая",
-          "Weight": 200,
-          "Size": 20,
-          "Price": 100,
-          "Additive": 2,
-          Additives: [
-            {
-              "Id": 9,
-              "Name": "Лук",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 10,
-              "Price": 10,
-              "Number": 1
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Id": 13,
-      "Name": "Пицца колбасная 13",
-      "Description": 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.',
-      "IdCategory": 2,
-      "CategoryName": "Пиццы",
-      "Image": "https://sun9-39.userapi.com/impg/TFoGPMxwVD5Ige-fR2i7W7oFJjHjaikQ6AiYZQ/PRESMDWsOr4.jpg?size=292x292&quality=96&sign=d3f8e0440f94de30ad0bfd06ac80a528&type=album",
-      Options: [
-        {
-          "Id": 13,
-          "Name": "Средняя",
-          "Weight": 350,
-          "Size": 25,
-          "Price": 150,
-          "Additive": 3,
-          Additives: [
-            {
-              "Id": 9,
-              "Name": "Лук",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 10,
-              "Price": 10,
-              "Number": 0
-            },
-            {
-              "Id": 10,
-              "Name": "Мясо",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 11,
-              "Name": "Мясо1",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 12,
-              "Name": "Мясо2",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 13,
-              "Name": "Мясо3",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            }
-          ]
-        },
-        {
-          "Id": 14,
-          "Name": "Малая",
-          "Weight": 200,
-          "Size": 20,
-          "Price": 100,
-          "Additive": 2,
-          Additives: [
-            {
-              "Id": 9,
-              "Name": "Лук",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 10,
-              "Price": 10,
-              "Number": 1
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Id": 13,
-      "Name": "Пицца колбасная 13",
-      "Description": 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века.',
-      "IdCategory": 2,
-      "CategoryName": "Пиццы",
-      "Image": "https://sun9-39.userapi.com/impg/TFoGPMxwVD5Ige-fR2i7W7oFJjHjaikQ6AiYZQ/PRESMDWsOr4.jpg?size=292x292&quality=96&sign=d3f8e0440f94de30ad0bfd06ac80a528&type=album",
-      Options: [
-        {
-          "Id": 13,
-          "Name": "Средняя",
-          "Weight": 350,
-          "Size": 25,
-          "Price": 150,
-          "Additive": 3,
-          Additives: [
-            {
-              "Id": 9,
-              "Name": "Лук",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 10,
-              "Price": 10,
-              "Number": 0
-            },
-            {
-              "Id": 10,
-              "Name": "Мясо",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 11,
-              "Name": "Мясо1",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 12,
-              "Name": "Мясо2",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            },
-            {
-              "Id": 13,
-              "Name": "Мясо3",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 20,
-              "Price": 20,
-              "Number": 0
-            }
-          ]
-        },
-        {
-          "Id": 14,
-          "Name": "Малая",
-          "Weight": 200,
-          "Size": 20,
-          "Price": 100,
-          "Additive": 2,
-          Additives: [
-            {
-              "Id": 9,
-              "Name": "Лук",
-              "Image": "https://rozetked.me/images/uploads/dwoilp3BVjlE.jpg",
-              "Weight": 10,
-              "Price": 10,
-              "Number": 1
-            }
-          ]
-        }
-      ]
     }
   ]
+  Additive = []
   constructor() {
     makeAutoObservable(this)
   }
+  GetData = () => {
+    Product.GetProduct().then((response1) => {
+      this.setBPBC(response1.Data.BranchProducts, response1.Data.Branches, response1.Data.Category)
+      let tempProducts = response1.Data.Products.map(el => {return{...el, Image: response1.UrlServer+el.Image}})
 
+      Product.GetAdditive().then((response2) => {
+        this.setAdditive(
+          response2.Data.map(el => {return{...el, Image: response2.UrlServer+el.Image}})
+        )
+        Product.GetProductOption().then((response) => {
+
+          let temp = tempProducts.map(el => {
+            let tempProductOption = response.Data.ProductOption.filter(elF => elF.IdProduct == el.Id).map(elPO => {
+              let tempAdditive = response.Data.ListAdditives
+                .filter(elFLA => elFLA.IdProductOption == elPO.Id)
+                .map(elt1 => {
+                  return this.Additive.find(elfind => elfind.Id == elt1.IdAdditive)
+                })
+              return {...elPO, Additives: tempAdditive}
+            })
+            return {...el, Options: tempProductOption}
+          })
+          
+          temp = temp.filter(elF => elF.Options.length > 0)
+          this.setProduct(temp)
+        })
+      })
+    })
+  }
+  setBPBC(BranchProducts, Branches, Category){
+    this.BranchProducts = BranchProducts;
+    this.Branches = Branches;
+    this.Category = Category;
+    console.log("Запись новых категорий, отделов")
+  }
+  setAdditive(data){
+    this.Additive = data
+    console.log("Запись новых добавок")
+  }
+  setProduct(data){
+    this.Products = data
+    console.log(data)
+    console.log("Запись новых продуктов")
+  }
 }
 
 export default new menu()

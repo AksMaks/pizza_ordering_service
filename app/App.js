@@ -13,7 +13,12 @@ import { setCustomText } from 'react-native-global-props';
 import Main from './components/Main'
 import * as axios from 'axios';
 
+import basket from './store/basket';
+import contacts from './store/contacts';
+import levels from './store/levels';
+import menu from './store/menu';
 import profile from './store/profile';
+import stories from './store/stories';
 
 export default function App() {
   const [load, setLoad] = useState(true)
@@ -31,8 +36,12 @@ export default function App() {
   setCustomText(customTextProps);
   
   const _Async = async () => {
-    await AsyncStorage.setItem("user", "MAKS")
+    await AsyncStorage.setItem("user", "MAKS1")
     console.log(await AsyncStorage.getItem("user"))
+
+    contacts.GetData()
+    levels.GetData()
+    stories.GetData()
     /*
     await axios.get("http://84.201.187.93:5000/api/Product")
     .then(Response => {

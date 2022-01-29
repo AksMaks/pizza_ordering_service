@@ -7,7 +7,8 @@ import {NotificationsAC} from '../../redux/NotificationsReducer';
 
 //Валидация
 const required = value => (value || typeof value === 'number' ? undefined : 'Обязательный')
-const phone = value => value.slice(3).replace(/[^\d]/g, '').length < 10?  "Номер введен не полностью": undefined
+const phoneMin = value => value.slice(2).replace(/[^\d]/g, '').length < 10?  "Номер введен не полностью": undefined
+const phoneMax = value => value.slice(2).replace(/[^\d]/g, '').length > 11?  "Номер введен большой": undefined
 
 //нормализация номера телефона (приведение к шаблону "+7 999-999-999")
 const normalizePhone = (value) => {
@@ -15,14 +16,12 @@ const normalizePhone = (value) => {
     return value
   }
 
-  const onlyNums = value.slice(3).replace(/[^\d]/g, '')
-  if (onlyNums.length <= 3) {
-    return `+7 ${onlyNums}`
+  const onlyNums = value.slice(2).replace(/[^\d]/g, '')
+  console.log(onlyNums)
+  if (onlyNums.length <= 2) {
+    return `+7${onlyNums}`
   }
-  if (onlyNums.length <= 7) {
-    return `+7 ${onlyNums.slice(0, 3)}-${onlyNums.slice(3)}`
-  }
-  return `+7 ${onlyNums.slice(0, 3)}-${onlyNums.slice(3, 6)}-${onlyNums.slice(6, 10)}`
+  return `+7${onlyNums}`
 }
 
 const renderField = ({
@@ -56,7 +55,7 @@ const AuthForm = (props) => {
           type="phone"
           component={renderField} 
           label="Телефон"
-          validate={[ required, phone ]}
+          validate={[ required, phoneMin, phoneMax]}
           normalize={normalizePhone}
         />
         <Field

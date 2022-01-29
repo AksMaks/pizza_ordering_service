@@ -11,9 +11,7 @@ import {
 } from '@expo-google-fonts/raleway';
 
 import Arrow from '../../assets/Profile/Arrow'
-
 import Header from '../header/header';
-
 import profile from '../../store/profile';
 
 const CodeInput = observer((props) => {
@@ -39,6 +37,7 @@ const CodeInput = observer((props) => {
   const repeat = () =>{
     setTime(60)
     setDisabled(true)
+    //profile.Auth(props.route.params.Phone, code)
     //navigation.navigate("Profile")
   }
   
@@ -87,6 +86,8 @@ const PhoneInput = observer((props) => {
   });
 
   const sendNumber = () =>{
+    profile.test()
+    //profile.GetCode(phone)
     navigation.navigate("CodeInput", {Phone: phone})
   }
 

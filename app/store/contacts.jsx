@@ -1,4 +1,6 @@
 import { makeAutoObservable } from "mobx"
+import { Contacts } from "../api/api"
+
 class contacts {
   data = [
     {
@@ -33,10 +35,21 @@ class contacts {
   constructor() {
     makeAutoObservable(this)
   }
+  GetData = () => {
+    Contacts.GetContact().then((response) => {
+      this.setContacts(response.Data.reverse().map(el => {
+        return {
+          ...el,
+          Image: response.UrlServer+el.Icon
+        }
+      })
+      )
+    })
+  }
   //записать контакты
   setContacts(data){
     this.data = data
-    Console.log("Запись новых контактов")
+    console.log("Запись новых контактов")
   }
   //Получить контакты
   getContacts(){
