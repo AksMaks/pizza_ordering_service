@@ -95,36 +95,35 @@ class controller{
     const {Phone} = data
     let code = Math.round(Math.random() * (9999 - 1000) + 1000).toString()
     let hashPassword = bcript.hashSync(code, 5)
+    let GoCode = () => {
+      var axios = require('axios');
+      var data = JSON.stringify({
+        "apiKey": "VXA3Pjf9wM4rtbwR4L8Doftq4atfKbKB5iPIZqMbbetYoZppoToJseyeapEv",
+        "sms": [
+          {
+            "channel": "char",
+            "phone": Phone,
+            "text": "Код подтверждения: "+code+". Никому его не сообщайте.",
+            "sender": "VIRTA"
+          }
+        ]
+      });
 
-    var axios = require('axios');
-    var data = JSON.stringify({
-      "apiKey": "VXA3Pjf9wM4rtbwR4L8Doftq4atfKbKB5iPIZqMbbetYoZppoToJseyeapEv",
-      "sms": [
-        {
-          "channel": "char",
-          "phone": Phone,
-          "text": "Код подтверждения: "+code+". Никому его не сообщайте.",
-          "sender": "VIRTA"
-        }
-      ]
-    });
+      var config = {
+        method: 'post',
+        url: 'https://admin.p1sms.ru/apiSms/create',
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        data : data
+      };
 
-    var config = {
-      method: 'post',
-      url: 'https://admin.p1sms.ru/apiSms/create',
-      headers: { 
-        'Content-Type': 'application/json'
-      },
-      data : data
-    };
-
-    axios(config)
-    .then(function (response) {
-    })
-    .catch(function (error) {
-    });
-
-
+      axios(config)
+      .then(function (response) {
+      })
+      .catch(function (error) {
+      });
+    }
     await db.sequelize.transaction(async  transaction => {
       await db.sequelize.query(
         'UPDATE `user` SET `Password`=? WHERE Phone=?',
@@ -135,12 +134,24 @@ class controller{
           type: db.sequelize.QueryTypes.UPDATE,
           transaction: transaction
         }
-      )
+      ).then(result => {
+        if(result[0]["changedRows"] == 0){
+          this.Insert(
+            {
+              Name: "Name", 
+              Phone: Phone, 
+              Password: hashPassword
+            }
+          )
+          GoCode()
+        }
+      })
     }).then(result => {
       Response.Message = "Запись изменена"
+      GoCode()
     }).catch(error => {
       Response.Error = true
-      Response.Message = "Запись не изменена"
+      Response.Message = "Запись изменена"
     })
     return Response
   }
@@ -162,6 +173,7 @@ class controller{
           if(bcript.compareSync(Password, result[0][0]["Password"])){
             Response.Token = createAccessToken(result[0][0]["Id"], result[0][0]["IdRole"])
             Response.UserName = result[0][0]["Name"]
+            Response.Id = result[0][0]["Id"]
             Response.Message = "Авторизация прошла успешно"
           }else{
             Response.Error = true
