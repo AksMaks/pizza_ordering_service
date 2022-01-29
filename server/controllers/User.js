@@ -60,7 +60,7 @@ class controller{
   }
   GetOne = async (data) => {
     let Response = {}
-    const {Id} = data.user
+    const {Id} = data
     await db.sequelize.transaction(async  transaction => {
       await db.sequelize.query(
         'SELECT `Id`, `IdUser`, `Address`, `Name` FROM `user_address` WHERE IdUser=?',
@@ -76,7 +76,7 @@ class controller{
         Response.Data.Address = result[0][0]
       })
       await db.sequelize.query(
-        'SELECT `Id`, `Name`, `Phone`, `Password`, `IdRole`, `RoleName`, `IdLevel`, `LevelName`, `Сashback`, `Points` FROM `view_user` WHERE Id=?',
+        'SELECT `Id`, `Name`, `Phone`, `Password`, `IdRole`, `IdLevel`, `Points` FROM `user` WHERE Id=?',
         {
           replacements: [Id]
         },
