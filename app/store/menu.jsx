@@ -143,7 +143,6 @@ class menu {
   }
   setProduct(data){
     this.Products = data
-    console.log(data)
     console.log("Запись новых продуктов")
   }
 }

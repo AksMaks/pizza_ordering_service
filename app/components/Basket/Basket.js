@@ -24,18 +24,6 @@ const Basket = observer(() => {
     Raleway_600SemiBold
   });
 
-  //Считает суммарную цену
-  const getPrice = () => {
-    let sum = 0
-    basket.list.forEach(el => {
-      let price = el.Option.Price
-      el.Option.Additives.forEach(el => {
-        price += el.Price*el.Number
-      })
-      sum += price*el.Number
-    })
-    return sum
-  }
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
@@ -86,7 +74,7 @@ const Basket = observer(() => {
           }
         }}>
         <View style={styles.OrderButton}>
-          <Text style={styles.OrderButtonText}>{"Оформить заказ на " + getPrice()}</Text>
+          <Text style={styles.OrderButtonText}>{"Оформить заказ на " + basket.getPrice()}</Text>
         </View>
       </TouchableWithoutFeedback>
       }

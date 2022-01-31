@@ -42,6 +42,7 @@ export default function App() {
     contacts.GetData()
     levels.GetData()
     stories.GetData()
+    menu.GetData()
     /*
     await axios.get("http://84.201.187.93:5000/api/Product")
     .then(Response => {

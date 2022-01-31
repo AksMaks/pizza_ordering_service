@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import { StyleSheet, Text, ScrollView, View, Image, TouchableWithoutFeedback } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { StyleSheet, Text, ScrollView, View, Image, TouchableWithoutFeedback, TextInput} from 'react-native';
 import { useNavigation} from '@react-navigation/native';
 import { observer } from "mobx-react-lite"
 import { v4 as uuidv4 } from 'uuid';
@@ -18,6 +18,7 @@ import {
 
 const Order = observer(() => {
   const navigation = useNavigation();
+  const [Comment, setComment] = useState("");
   let [fontsLoaded] = useFonts({
     Raleway_600SemiBold
   });
@@ -32,16 +33,23 @@ const Order = observer(() => {
         </View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={() => navigation.navigate('PaymentMethod')}>
-      <View style={styles.Item}>
+        <View style={styles.Item}>
           <Text style={styles.Text}>{basket.paymentMethod}</Text>
           <View style={{marginRight: 5}}><Arrow/></View>
         </View>
       </TouchableWithoutFeedback>
-
+      <View style={styles.Item}>
+        <TextInput
+          onChangeText={setComment}
+          value={Comment}
+          placeholder="Комментарий"
+        />
+      </View>
       <TouchableWithoutFeedback 
         onPress={() => {
+          basket.setComment(Comment)
+          basket.AddOrder()
           navigation.navigate("SuccessfulOrder")
-          ////////Тут функция для выполения заказа
         }}>
         <View style={styles.OrderButton}>
           <Text style={styles.OrderButtonText}>{"Заказать"}</Text>

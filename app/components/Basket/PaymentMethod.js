@@ -22,7 +22,7 @@ const PaymentMethod = observer(() => {
 
   return (
     <View style={styles.container}>
-      <Header leftText={"< Назад"} centerText={"Доставка"} rightText={""} leftActive={() => navigation.goBack()}/>
+      <Header leftText={"< Назад"} centerText={"Способ оплаты"} rightText={""} leftActive={() => navigation.goBack()}/>
       <TouchableWithoutFeedback 
         onPress={() => {
           basket.setPaymentMethod("Apple Pay")

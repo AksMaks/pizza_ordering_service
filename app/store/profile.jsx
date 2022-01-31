@@ -5,9 +5,9 @@ class profile {
   constructor() {
     makeAutoObservable(this)
   }
-  User = false
+  User = true
   data = {
-    Id: 1,
+    Id: 33,
     Name: "Вася Попов",
     Phone: "+7-999-999-9999",
     Password: "asd",
@@ -45,6 +45,9 @@ class profile {
   test = () => {
     Profile.GetOne({Id: 33}).then((response2) => {
       console.log(response2.Data.Users)
+      if(!!response2.Data.Users){
+        setUser(true)
+      }
     })
   }
   //для выбора нужного адреса
@@ -64,7 +67,12 @@ class profile {
   setCurrentAddress = (newCurrentAddress) => {
     this.CurrentAddress = newCurrentAddress
   }
-
+  setData = (data) => {
+   this.data = data
+  }
+  seUser = (data) => {
+    this.User = data
+   }
   ChangeNamePhone = (newName, newPhone) => {
     this.data.Name = newName
     this.data.Phone = newPhone

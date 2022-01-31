@@ -71,5 +71,8 @@ export const Contacts = {
 export const Profile = {
   GetCode: (data) => Post("/User/getCode", data),
   Auth: (data) => Post("/User/auth", data),
-  GetOne: (data) => Get("/User/one", data),
+  GetOne: (data) => Post("/User/one", data),
+}
+export const Order = {
+  Insert: (data) => Post("/Order/insert", data),
 }
