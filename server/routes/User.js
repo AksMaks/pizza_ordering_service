@@ -56,6 +56,15 @@ router.post('/app', [], (req, res) => {
     ErrorHandler(res, e)
   }
 })
+router.post('/RefReg', [], (req, res) => {
+  try{
+    (async () => {
+      res.status(200).json(await User.RefReg(req.body))
+    })()
+  }catch(e){
+    ErrorHandler(res, e)
+  }
+})
 router.post('/', [], (req, res) => {
   try{
     (async () => {

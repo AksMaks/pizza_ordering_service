@@ -4,6 +4,8 @@ let db = require("../models/index.js");
 const {jwtSecret} = require("config");
 const axios = require("axios")
 
+const REFPOINTS = 500
+
 const createAccessToken = (Id, IdRole) => {
   let  payload = {
     Id: Id,
@@ -14,6 +16,35 @@ const createAccessToken = (Id, IdRole) => {
 
 function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
+}
+const GoCode = (Phone, code) => {
+  var axios = require('axios');
+  var data = JSON.stringify({
+    "apiKey": "VXA3Pjf9wM4rtbwR4L8Doftq4atfKbKB5iPIZqMbbetYoZppoToJseyeapEv",
+    "sms": [
+      {
+        "channel": "char",
+        "phone": Phone,
+        "text": "Код подтверждения: "+code+". Никому его не сообщайте.",
+        "sender": "VIRTA"
+      }
+    ]
+  });
+
+  var config = {
+    method: 'post',
+    url: 'https://admin.p1sms.ru/apiSms/create',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+
+  axios(config)
+  .then(function (response) {
+  })
+  .catch(function (error) {
+  });
 }
 
 class controller{
@@ -95,35 +126,7 @@ class controller{
     const {Phone} = data
     let code = Math.round(Math.random() * (9999 - 1000) + 1000).toString()
     let hashPassword = bcript.hashSync(code, 5)
-    let GoCode = () => {
-      var axios = require('axios');
-      var data = JSON.stringify({
-        "apiKey": "VXA3Pjf9wM4rtbwR4L8Doftq4atfKbKB5iPIZqMbbetYoZppoToJseyeapEv",
-        "sms": [
-          {
-            "channel": "char",
-            "phone": Phone,
-            "text": "Код подтверждения: "+code+". Никому его не сообщайте.",
-            "sender": "VIRTA"
-          }
-        ]
-      });
-
-      var config = {
-        method: 'post',
-        url: 'https://admin.p1sms.ru/apiSms/create',
-        headers: { 
-          'Content-Type': 'application/json'
-        },
-        data : data
-      };
-
-      axios(config)
-      .then(function (response) {
-      })
-      .catch(function (error) {
-      });
-    }
+    
     await db.sequelize.transaction(async  transaction => {
       await db.sequelize.query(
         'UPDATE `user` SET `Password`=? WHERE Phone=?',
@@ -148,7 +151,7 @@ class controller{
       })
     }).then(result => {
       Response.Message = "Запись изменена"
-      GoCode()
+      GoCode(Phone, code)
     }).catch(error => {
       Response.Error = true
       Response.Message = "Запись изменена"
@@ -187,6 +190,48 @@ class controller{
     })
     return Response
   }
+  RefReg = async (data) => {
+    let Response = {}
+    const {Phone, PhoneRef} = data
+    const IdRole = 1
+    let code = Math.round(Math.random() * (9999 - 1000) + 1000).toString()
+    let hashPassword = bcript.hashSync(code, 5)
+
+    await db.sequelize.transaction(async  transaction => {
+      await db.sequelize.query(
+        'SELECT `Id` FROM `user` WHERE Phone = ?', 
+        {
+          replacements: [PhoneRef]
+        },
+        {
+          type: db.sequelize.QueryTypes.SELECT,
+          transaction: transaction
+        }
+      ).then(res => {
+        console.log(res[0][0]["Id"])
+        if(!!res[0][0]["Id"]){
+          db.sequelize.query(
+            'INSERT INTO `user`(`Name`, `Phone`, `Password`, `IdRole`, `IdLevel`, `Points`) VALUES (?, ?, ?, ?, ?, ?); UPDATE `user` SET `Points`=`Points` + ? WHERE Id = ?', 
+            {
+              replacements: ["Name", Phone, hashPassword, IdRole, 1, REFPOINTS, REFPOINTS, res[0][0]["Id"]]
+            },
+            {
+              type: db.sequelize.QueryTypes.INSERT,
+              transaction: transaction
+            }
+          )
+        }
+      })
+    }).then(result => {
+      Response.Message = "Запись добавлена"
+      GoCode(Phone, code)
+    }).catch(error => {
+      Response.Error = true
+      Response.Message = "Запись не добавлена"
+    })
+    
+    return Response
+  }
   Insert = async (data) => {
     let Response = {}
     const {Name, Phone, Password, IdRole, IdLevel, Addresses} = data
@@ -196,7 +241,7 @@ class controller{
       await db.sequelize.query(
         'INSERT INTO `user`(`Name`, `Phone`, `Password`, `IdRole`, `IdLevel`, `Points`) VALUES (?, ?, ?, ?, ?, ?)', 
         {
-          replacements: [Name, Phone, hashPassword, 1, 1, 0]
+          replacements: [Name, Phone, hashPassword, IdRole, 1, 0]
         },
         {
           type: db.sequelize.QueryTypes.INSERT,
@@ -205,6 +250,7 @@ class controller{
       )
     }).then(result => {
       Response.Message = "Запись добавлена"
+      GoCode(Phone, Password)
     }).catch(error => {
       Response.Error = true
       Response.Message = "Запись не добавлена"
