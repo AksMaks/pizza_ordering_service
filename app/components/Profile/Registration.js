@@ -37,8 +37,18 @@ const CodeInput = observer((props) => {
   const repeat = () =>{
     setTime(60)
     setDisabled(true)
-    //profile.Auth(props.route.params.Phone, code)
-    //navigation.navigate("Profile")
+  }
+  const Auth = () => {
+    profile.Auth(props.route.params.Phone, code).then((res) => {
+      console.log(res)
+      profile.SetAddresses(IdUser)
+      profile.GetOne(res.Id).then((res2) => {
+        AsyncStorage.setItem("IdUser", res.Id.toString())
+        profile.setData(res2.Data.Users)
+        profile.seUser(true)
+        navigation.navigate("Profile")
+      })
+    })
   }
   
   if (!fontsLoaded) {
@@ -71,6 +81,11 @@ const CodeInput = observer((props) => {
               <Text style={[styles.OrderButtonText, {color: !disabled? "#FFFFFF": "#959595"}]}>{"Получить новый код"}</Text>
             </View>
           </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => Auth()}>
+            <View style={[styles.AuthButton]}>
+              <Text style={[styles.AuthButtonText]}>{"Отправить код"}</Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </View>
     );
@@ -86,8 +101,7 @@ const PhoneInput = observer((props) => {
   });
 
   const sendNumber = () =>{
-    profile.test()
-    //profile.GetCode(phone)
+    profile.GetCode(phone)
     navigation.navigate("CodeInput", {Phone: phone})
   }
 
@@ -102,6 +116,68 @@ const PhoneInput = observer((props) => {
         </View>
         <View style={styles.Item}>
           <Text style={styles.ItemText}>Номер</Text>
+          <TextInput
+            style={styles.Iteminput}
+            onChangeText={setPhone}
+            value={phone}
+            maxLength={50}
+            keyboardType={"numeric"}
+          />
+        </View>
+        
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('RegPhoneInput')}>
+          <View style={styles.RegButton}>
+            <Text style={styles.RegButtonText}>{"Регистация"}</Text>
+          </View>
+        </TouchableWithoutFeedback>
+        <View style={{position: "absolute", bottom: 0, left: 20}}>
+          <Text style={{marginHorizontal: 27, textAlign: "center", color: "#959595", fontSize: 12}}>Продолжая, вы соглашаетесь с политикой конфиденциальности</Text>
+          <TouchableWithoutFeedback onPress={() => sendNumber()}>
+            <View style={styles.OrderButton}>
+              <Text style={styles.OrderButtonText}>{"Продолжить"}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </View>
+    );
+  }
+})
+
+const RegPhoneInput = observer((props) => {
+  const navigation = useNavigation();
+  const [phone, setPhone] = useState("")
+  const [phoneRef, setPhoneRef] = useState("")
+
+  let [fontsLoaded] = useFonts({
+    Raleway_600SemiBold
+  });
+
+  const sendNumber = () =>{
+    profile.Reg(phone, phoneRef)
+    navigation.navigate("CodeInput", {Phone: phone})
+  }
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
+    return (
+      <View style={[styles.container, {paddingHorizontal: 20}]}>
+        <Header leftText={"< Назад"} centerText={""} rightText={""} leftActive={navigation.goBack}/>
+        <View style={{justifyContent: "center", flexDirection: "row"}}>
+          <Text style={{width: "80%", textAlign: "center", fontFamily: "Raleway_600SemiBold", fontSize: 18}}>{props.route.params.Text}</Text>
+        </View>
+        <View style={styles.Item}>
+          <Text style={styles.ItemText}>Номер</Text>
+          <TextInput
+            style={styles.Iteminput}
+            onChangeText={setPhone}
+            value={phone}
+            maxLength={50}
+            keyboardType={"numeric"}
+          />
+        </View>
+        <View style={styles.Item}>
+          <Text style={styles.ItemText}>Номер реферала</Text>
           <TextInput
             style={styles.Iteminput}
             onChangeText={setPhone}
@@ -138,6 +214,12 @@ const Registration = (props) => {
           initialParams={{ Text: props.route.params.Text}}
           />
         <RegistrationStack.Screen 
+          name="RegPhoneInput"
+          component={RegPhoneInput} 
+          options={{headerShown: false}}
+          initialParams={{ Text: "Введите свой номер и номер реферала"}}
+          />
+        <RegistrationStack.Screen 
           name="CodeInput" 
           component={CodeInput} 
           options={{headerShown: false}}/>
@@ -169,7 +251,7 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: "#D84C38",
     borderRadius: 8,
-    marginVertical: 20
+    marginVertical: 10
   },
   OrderButtonText: {
     textAlign: "center",
@@ -178,7 +260,37 @@ const styles = StyleSheet.create({
     marginVertical: 14,
     fontSize: 15,
     fontFamily: "Raleway_600SemiBold"
-  }
+  },
+  RegButton: {
+    width: "50%",
+    height: 40,
+    backgroundColor: "#D84C38",
+    borderRadius: 8,
+    marginVertical: 20
+  },
+  RegButtonText: {
+    textAlign: "center",
+    lineHeight: 20,
+    color: "#FFFFFF",
+    marginVertical: 10,
+    fontSize: 12,
+    fontFamily: "Raleway_600SemiBold"
+  },
+  AuthButton: {
+    width: "100%",
+    height: 50,
+    backgroundColor: "#D84C38",
+    borderRadius: 8,
+    marginVertical: 20
+  },
+  AuthButtonText: {
+    textAlign: "center",
+    lineHeight: 22,
+    color: "#FFFFFF",
+    marginVertical: 14,
+    fontSize: 15,
+    fontFamily: "Raleway_600SemiBold"
+  },
 });
 
 export default Registration  

@@ -175,13 +175,13 @@ ${Type == "Доставка", "Цена доставки: 55 рублей"}
         },
         data : data
       };
-/*
+
       axios(config)
       .then(function (response) {
       })
       .catch(function (error) {
       });
-*/
+
       Response.Message = "Запись добавлена"
     }).catch(error => {
       Response.Error = true

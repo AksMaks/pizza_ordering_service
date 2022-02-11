@@ -26,10 +26,10 @@ const Product = (props) => {
         <View style={styles.Text}>
           <Text style={styles.Name}>{props.Name}</Text>
           {props.Description && <Text style={styles.Description}>{props.Description}</Text>}
-            <View style={styles.Price}>
-              <Text style={styles.PriceText}>{"от " + props.Price + "р"}</Text>
-              <View style={{marginLeft: 5}}><Arrow color={"#BC3B28"}/></View>
-            </View>
+          <View style={styles.Price}>
+            <Text style={styles.PriceText}>{"от " + props.Price + "р"}</Text>
+            <View style={{marginLeft: 5}}><Arrow color={"#BC3B28"}/></View>
+          </View>
         </View>
       </View>  
       </TouchableWithoutFeedback>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   Text: {
-    marginLeft: 25
+    marginLeft: 10,
   },
   Name: {
     width: 170,

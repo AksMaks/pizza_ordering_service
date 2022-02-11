@@ -43,7 +43,7 @@ const Address = (props) => {
             Address: {Street, House, Apartment, Entrance, Floor},
             Comment: Comment
           })
-          profile.addAddress({Street, House, Apartment, Entrance, Floor}, Comment)
+          profile.addAddress(profile.data.Id, {Street, House, Apartment, Entrance, Floor}, Comment)
           navigation.navigate("Order")
         }}/>
       <ScrollView showsVerticalScrollIndicator={false}>

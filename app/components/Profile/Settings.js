@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, ScrollView, View, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TextInput, Alert, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation} from '@react-navigation/native';
 import { observer } from "mobx-react-lite"
 import AppLoading from 'expo-app-loading';
@@ -42,6 +42,11 @@ const Settings = observer(() => {
           maxLength={100}
         />
       </View>
+      <TouchableWithoutFeedback onPress={() => {profile.Exit(), navigation.navigate('Menu')}}>
+        <View style={styles.RegButton}>
+          <Text style={styles.RegButtonText}>{"Выйти"}</Text>
+        </View>
+      </TouchableWithoutFeedback>
       {false &&
       <View style={styles.Item}>
         <Text style={styles.ItemText}>День рождения</Text>
@@ -52,6 +57,7 @@ const Settings = observer(() => {
         />
       </View>
       }
+      {false &&
       <View style={styles.Item}>
         <Text style={styles.ItemText}>Телефон</Text>
         <TextInput
@@ -62,6 +68,7 @@ const Settings = observer(() => {
           keyboardType='numeric'
         />
       </View>
+      }
     </View>
   );
   }
@@ -91,6 +98,21 @@ const styles = StyleSheet.create({
   Iteminput: {
     color: "#202020",
     fontSize: 18,
-  }
+  },
+  RegButton: {
+    width: "50%",
+    height: 40,
+    backgroundColor: "#D84C38",
+    borderRadius: 8,
+    marginVertical: 20
+  },
+  RegButtonText: {
+    textAlign: "center",
+    lineHeight: 20,
+    color: "#FFFFFF",
+    marginVertical: 10,
+    fontSize: 12,
+    fontFamily: "Raleway_600SemiBold"
+  },
 });
 export default Settings

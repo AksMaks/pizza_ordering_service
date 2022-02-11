@@ -88,7 +88,7 @@ export const ThunkCreator = {
     }
   },
   Add: (Data) => {
-    let temp = {...Data, Addresses: [], IdRole: null, IdLevel: null}
+    let temp = {...Data, Addresses: [], IdRole: 2, IdLevel: null}
     return (dispatch) => {
       Api.Insert(temp).then((response) => {
         if(!response.Error){

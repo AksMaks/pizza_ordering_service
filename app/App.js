@@ -39,17 +39,19 @@ export default function App() {
     await AsyncStorage.setItem("user", "MAKS1")
     console.log(await AsyncStorage.getItem("user"))
 
+    await AsyncStorage.setItem("IdUser", "39")
+    let IdUser = await AsyncStorage.getItem("IdUser")
+    console.log(IdUser)
+    profile.SetAddresses(IdUser)
+    profile.GetOne(IdUser).then((res2) => {
+      profile.setData(res2.Data.Users)
+      profile.seUser(true)
+    })
+
     contacts.GetData()
     levels.GetData()
     stories.GetData()
     menu.GetData()
-    /*
-    await axios.get("http://84.201.187.93:5000/api/Product")
-    .then(Response => {
-      console.log({Response: Response.data})
-      
-    })
-    */
   }
 
   if(load && fontsLoaded){

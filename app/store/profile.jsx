@@ -1,11 +1,12 @@
 import { makeAutoObservable } from "mobx"
-import { Profile } from "../api/api"
+import { AsyncStorage } from 'react-native';
+import { Profile, Address } from "../api/api"
 
 class profile {
   constructor() {
     makeAutoObservable(this)
   }
-  User = true
+  User = false
   data = {
     Id: 33,
     Name: "Вася Попов",
@@ -16,7 +17,7 @@ class profile {
     IdLevel: "1",
     LevelName: "Начальный",
     Сashback: "10",
-    Points: "10",
+    Points: "0",
   }
   Addresses = [
     {
@@ -54,21 +55,25 @@ class profile {
   CurrentAddress = null
   //получить код
   GetCode = (phone) => {
-    Profile.GetCode({Phone:phone}).then((response) => {})
+    return Profile.GetCode({Phone:phone})
   }
   //авторизация
   Auth = (phone, pass) => {
-    Profile.Auth({Phone:phone, Password: pass}).then((response1) => {
-      Profile.GetOne({Id: response1.Id}).then((response2) => {
-        console.log(response2)
-      })
-    })
+    return Profile.Auth({Phone:phone, Password: pass})
+  }
+  GetOne = (Id) => {
+    return Profile.GetOne({Id: Id})
+  }
+  //регистрация
+  Reg = (phone, phoneRef) => {
+    return Profile.RegRef({Phone:phone, PhoneRef: phoneRef})
   }
   setCurrentAddress = (newCurrentAddress) => {
     this.CurrentAddress = newCurrentAddress
   }
   setData = (data) => {
-   this.data = data
+    console.log(data)
+    this.data = data
   }
   seUser = (data) => {
     this.User = data
@@ -76,9 +81,16 @@ class profile {
   ChangeNamePhone = (newName, newPhone) => {
     this.data.Name = newName
     this.data.Phone = newPhone
+    Profile.Change(this.data)
   }
-  addAddress = (newAddress, Comment) => {
-    
+  SetAddresses = (IdUser) => {
+    Address.Get({IdUser: IdUser}).then(res => {
+      this.Addresses = res.Data.map(el => {return {...el, Address: JSON.parse(el.Address), Comment: el.Name}})
+    })
+  }
+  addAddress = (IdUser, newAddress, Comment) => {
+    Address.Insert({IdUser: IdUser, Address: JSON.stringify(newAddress), Name: Comment})
+    this.SetAddresses(IdUser)
   }
   changeAddress = (newAddress, Comment) => {
     this.Addresses.forEach(el => {
@@ -87,9 +99,15 @@ class profile {
         el.Comment = Comment
       }
     })
+    Address.Change({Id: this.CurrentAddress.Id, Address: JSON.stringify(newAddress), Name: Comment})
   }
   deleteAddress = (Id) => {
     this.Addresses = this.Addresses.filter(el => el.Id != Id)
+    Address.Delete({Id: Id})
+  }
+  Exit = () => {
+    AsyncStorage.removeItem("user")
+    this.seUser(false)
   }
 }
 

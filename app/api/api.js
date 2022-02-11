@@ -11,7 +11,7 @@ const createAlert = () => {
     { text: 'OK', onPress: () => console.log('OK Pressed') },
   ]);
 }
-const UrlServer = "http://178.154.244.47:5000"
+const UrlServer = "http://178.154.244.120:5000"
 const instance = axios.create({
   baseURL: UrlServer+'/api',
 })
@@ -72,7 +72,16 @@ export const Profile = {
   GetCode: (data) => Post("/User/getCode", data),
   Auth: (data) => Post("/User/auth", data),
   GetOne: (data) => Post("/User/one", data),
+  RegRef: (data) => Post("/User/RefReg", data),
+  Change: (data) => Patch("/User/", data),
 }
 export const Order = {
+  Get: (data) => Post("/Order/get", data),
   Insert: (data) => Post("/Order/insert", data),
+}
+export const Address = {
+  Get: (data) => Post("/Address/get", data),
+  Insert: (data) => Post("/Address/", data),
+  Change: (data) => Patch("/Address/", data),
+  Delete: (data) => Delete("/Address/", data),
 }
