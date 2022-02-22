@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { StyleSheet, Text, Image, View , TouchableWithoutFeedback, Alert, TextInput, ScrollView} from 'react-native';
+import { StyleSheet, Text, Image, View , TouchableWithoutFeedback, Alert, TextInput, ScrollView, AsyncStorage} from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { NavigationContainer, useNavigation} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -41,7 +41,7 @@ const CodeInput = observer((props) => {
   const Auth = () => {
     profile.Auth(props.route.params.Phone, code).then((res) => {
       console.log(res)
-      profile.SetAddresses(IdUser)
+      profile.SetAddresses(res.Id)
       profile.GetOne(res.Id).then((res2) => {
         AsyncStorage.setItem("IdUser", res.Id.toString())
         profile.setData(res2.Data.Users)
@@ -180,8 +180,8 @@ const RegPhoneInput = observer((props) => {
           <Text style={styles.ItemText}>Номер реферала</Text>
           <TextInput
             style={styles.Iteminput}
-            onChangeText={setPhone}
-            value={phone}
+            onChangeText={setPhoneRef}
+            value={phoneRef}
             maxLength={50}
             keyboardType={"numeric"}
           />

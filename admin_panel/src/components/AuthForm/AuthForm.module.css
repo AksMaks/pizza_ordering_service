@@ -1,0 +1,97 @@
+.Container{
+
+}
+.AuthForm{
+  width: 40%;
+  margin: auto;
+  margin-top: 8%;
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.25);
+}
+.Title{
+  width: 100%;
+  padding: 30px 0px;
+  text-align: center;
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 35px;
+  line-height: 48px;
+  /* identical to box height */
+
+
+  color: #171A2B;
+}
+.Form {
+  width: 100%;
+}
+.FormItem{
+  width: 300px;
+  margin: auto;
+  margin-top: 10px;
+  text-decoration: none;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 42px;
+  color: #8F9DA1;
+}
+.FormItem label{
+  display: inline-flex;
+}
+.FormItem span{
+  cursor: pointer;
+  width: 160px;
+  text-align: left;
+  font-size: 14px;
+  line-height: 19px;
+  color: #ff0000;
+}
+.FormItem input{
+  width: 300px;
+  padding: 0px 10px 0px 10px;
+  height: 40px;
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  outline: none;
+}
+.FormItem input{
+  width: 300px;
+  padding: 0px 10px 0px 10px;
+  height: 40px;
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  outline: none;
+}
+/*
+стили для основный кнопок формы
+*/
+.FormButtons{
+  margin: 20px 0px 0px 0px;
+  padding-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  height: 40px;
+}
+.FormButtons div{
+  margin: 0px 10px;
+}
+.FormButtons .Submit{
+  background: #FFB629;
+  border-radius: 8px;
+  border: none;
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  outline: none;
+  height: 40px;
+  width: 140px;
+  cursor: pointer;
+}
+.FormButtons .Reset{
+  border-radius: 8px;
+  border: 1px solid #666666;
+  color: #666666;
+  font-size: 16px;
+  outline: none;
+  height: 40px;
+  width: 140px;
+  cursor: pointer;
+}

@@ -41,6 +41,7 @@ export default function App() {
 
     await AsyncStorage.setItem("IdUser", "39")
     let IdUser = await AsyncStorage.getItem("IdUser")
+    
     console.log(IdUser)
     profile.SetAddresses(IdUser)
     profile.GetOne(IdUser).then((res2) => {

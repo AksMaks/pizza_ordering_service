@@ -1,5 +1,6 @@
 import React from 'react';
 import * as axios from 'axios';
+import s from'./AuthForm.module.css';
 import {connect} from 'react-redux';
 import { FieldArray, Field, reduxForm } from 'redux-form';
 
@@ -48,32 +49,39 @@ const AuthForm = (props) => {
     reset()
   }
 	return (
-    <div>
-      <form onSubmit={Submit}>
-        <Field
-          name="Phone" 
-          type="phone"
-          component={renderField} 
-          label="Телефон"
-          validate={[ required, phoneMin, phoneMax]}
-          normalize={normalizePhone}
-        />
-        <Field
-          name="Password"
-          type="password"
-          component={renderField}
-          label="Пароль"
-          validate={[required]}
-        />
-        <div>
-          <button type="submit" disabled={submitting}>
-            Авторизация
-          </button>
-          <button type="button" disabled={pristine || submitting} onClick={reset}>
-            Стереть
-          </button>
-        </div>
-      </form>
+    <div className={s.Container}>
+      <div className={s.AuthForm}>
+        <div className={s.Title}>Вход</div>
+        <form className={s.Form} onSubmit={Submit}>
+          <div className={s.FormItem}>
+            <Field
+              name="Phone" 
+              type="phone"
+              component={renderField} 
+              label="Телефон"
+              validate={[ required, phoneMin, phoneMax]}
+              normalize={normalizePhone}
+            />
+          </div>
+          <div className={s.FormItem}>
+            <Field
+              name="Password"
+              type="password"
+              component={renderField}
+              label="Пароль"
+              validate={[required]}
+            />
+          </div>
+          <div className={s.FormButtons}>
+            <div>
+              <button className={s.Reset} type="button" disabled={pristine || submitting} onClick={reset}>Стереть</button>
+            </div>
+            <div>
+              <button className={s.Submit} type="submit" disabled={submitting}>Авторизация</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   )
 };
