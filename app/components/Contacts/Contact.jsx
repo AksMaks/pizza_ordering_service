@@ -26,6 +26,7 @@ const Contact = (props) => {
       <Image
         style={styles.Image}
         source={{uri: props.Image}}
+        resizeMode="contain"
       />
       <Text style={styles.Text}>{props.Text}</Text>
     </View>
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   },
   Image: {
     width: 20,
-    height: 20,
+    height: 20
   },
   Text: {
     fontSize: 18,

@@ -24,7 +24,7 @@ const Profile = observer(({ navigation: { navigate} }) => {
   } else {
   return (
     <View style={styles.container}>
-      <Header leftText={"PizzData"} centerText={""} rightText={profile.data.Points + " Б"}/>
+      <Header leftText={"PizzData"} centerText={""} rightText={profile.data.Points + " D"}/>
       <View style={{flexDirection: "row", justifyContent: "space-between", heightL: 50}}>
         <Text style={styles.Name}>{profile.data.Name}</Text>
         <TouchableWithoutFeedback onPress={() => navigate('Settings')}>
@@ -36,7 +36,7 @@ const Profile = observer(({ navigation: { navigate} }) => {
       </View>
       <TouchableWithoutFeedback onPress={() => navigate('Points')}>
         <View style={styles.Item}>
-          <Text style={styles.Text}>Баллы</Text>
+          <Text style={styles.Text}>DataCoin</Text>
           <View style={{marginRight: 5}}><Arrow/></View>
         </View>
       </TouchableWithoutFeedback>
@@ -48,7 +48,7 @@ const Profile = observer(({ navigation: { navigate} }) => {
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={() => navigate('Addresses')}>
       <View style={[styles.Item, {borderBottomWidth: 0}]}>
-          <Text style={styles.Text}>Адресса доставки</Text>
+          <Text style={styles.Text}>Адреса доставки</Text>
           <View style={{marginRight: 5}}><Arrow/></View>
         </View>
       </TouchableWithoutFeedback>

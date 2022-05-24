@@ -7,23 +7,9 @@ import { FieldArray, Field, reduxForm } from 'redux-form';
 import {NotificationsAC} from '../../redux/NotificationsReducer';
 
 //Валидация
-const required = value => (value || typeof value === 'number' ? undefined : 'Обязательный')
-const phoneMin = value => value.slice(2).replace(/[^\d]/g, '').length < 10?  "Номер введен не полностью": undefined
-const phoneMax = value => value.slice(2).replace(/[^\d]/g, '').length > 11?  "Номер введен большой": undefined
-
-//нормализация номера телефона (приведение к шаблону "+7 999-999-999")
-const normalizePhone = (value) => {
-  if (!value) {
-    return value
-  }
-
-  const onlyNums = value.slice(2).replace(/[^\d]/g, '')
-  console.log(onlyNums)
-  if (onlyNums.length <= 2) {
-    return `+7${onlyNums}`
-  }
-  return `+7${onlyNums}`
-}
+const required = value => (value || typeof value === 'number' ? undefined : 'Обязательный, (+79876543210)')
+const phoneMin = value => value.slice(2).replace(/[^\d]/g, '').length < 10?  "Номер введен не полностью, (+79876543210)": undefined
+const phoneMax = value => value.slice(2).replace(/[^\d]/g, '').length > 10?  "Номер введен большой, (+79876543210)": undefined
 
 const renderField = ({
   input,

@@ -12,7 +12,7 @@ import {
 
 import Arrow from '../../assets/Profile/Arrow'
 
-import Header from '../header/header';
+import Header from '../header/header2';
 import profile from '../../store/profile';
 
 const Address = (props) => {
@@ -33,8 +33,8 @@ const Address = (props) => {
   return (
     <View style={[styles.container, {paddingHorizontal: 20}]}>
       <Header
-        leftText={"< Сохранить"}
-        centerText={"Адреса доставки"}
+        leftText={"< Назад"}
+        centerText={"Адрес доставки"}
         rightText={"Удалить"} 
         leftActive={() => {
           profile.changeAddress({Street, House, Apartment, Entrance, Floor}, Comment)

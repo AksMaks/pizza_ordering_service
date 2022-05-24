@@ -13,12 +13,14 @@ const Contacts = observer(() => {
     <ScrollView showsVerticalScrollIndicator={false} >
       <Image
         style={styles.Image}
-        source={{uri: 'https://sun9-39.userapi.com/impg/TFoGPMxwVD5Ige-fR2i7W7oFJjHjaikQ6AiYZQ/PRESMDWsOr4.jpg?size=292x292&quality=96&sign=d3f8e0440f94de30ad0bfd06ac80a528&type=album'}}
+        source={{uri: 'https://sun9-87.userapi.com/impg/jcQEd8L9B4za71HXua_plW975TTwqnL_xYFFBw/atmaoogbxFg.jpg?size=1280x853&quality=96&sign=f8dd44f08fbb5c534b5a3fcce8a34613&type=album'}}
       />
-      {contacts.getContacts().map(el => {
-        return <Contact key={uuidv4()} Url={el.Url} Text={el.Text} Image={el.Image}/>
-      })}
-      <Text style={styles.Text}>Политика конфиденциальности</Text>
+      <View style={{paddingHorizontal: 20}}>
+        {contacts.getContacts().map(el => {
+          return <Contact key={uuidv4()} Url={el.Url} Text={el.Text} Image={el.Image}/>
+        })}
+        <Text style={styles.Text}>Политика конфиденциальности</Text>
+      </View>  
     </ScrollView>
     </View>
   );
@@ -27,8 +29,8 @@ const Contacts = observer(() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
-    backgroundColor: "#ffffff"
+    paddingHorizontal: 0,
+    backgroundColor: "#ffffff",
   },
   Image:{
     width: "100%",
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     color: "rgba(188, 59, 40, 1)",
     textAlign: "center",
-    marginVertical: 30
+    marginVertical: 30,
   }
 });
 

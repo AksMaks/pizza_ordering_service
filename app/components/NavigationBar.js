@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   Bar: {
     flexDirection: "row",
     width: '100%',
-    height: 75
+    height: 75,
   },
   Link: {
     flex: 1,

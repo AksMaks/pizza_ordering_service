@@ -9,7 +9,7 @@ import {
   Raleway_600SemiBold,
 } from '@expo-google-fonts/raleway';
 
-import Header from '../header/header';
+import Header from '../header/header2';
 
 import profile from '../../store/profile';
 
@@ -31,7 +31,7 @@ const Settings = observer(() => {
   } else {
   return (
     <View style={styles.container}>
-      <Header leftText={"< Сохранить"} centerText={""} rightText={"300 Б"} leftActive={() => saveChange()}/>
+      <Header leftText={"< Сохранить"} centerText={""} rightText={"300 D"} leftActive={() => saveChange()}/>
       <Text style={[styles.Title, {fontFamily: 'Raleway_600SemiBold'}]}>Настройки</Text>
       <View style={styles.Item}>
         <Text style={styles.ItemText}>Имя</Text>
@@ -42,33 +42,35 @@ const Settings = observer(() => {
           maxLength={100}
         />
       </View>
-      <TouchableWithoutFeedback onPress={() => {profile.Exit(), navigation.navigate('Menu')}}>
-        <View style={styles.RegButton}>
-          <Text style={styles.RegButtonText}>{"Выйти"}</Text>
-        </View>
-      </TouchableWithoutFeedback>
-      {false &&
+      {true &&
       <View style={styles.Item}>
         <Text style={styles.ItemText}>День рождения</Text>
         <TextInput
           style={styles.Iteminput}
+          editable={false}
           onChangeText={() => Alert.alert("Уведовление", "В день рождения мы дарим скидку 10%. К сожажению, его нельзя изменить.")}
           value={profile.data.Birthday}
         />
       </View>
       }
-      {false &&
+      {true &&
       <View style={styles.Item}>
         <Text style={styles.ItemText}>Телефон</Text>
         <TextInput
           style={styles.Iteminput}
           onChangeText={setPhone}
+          editable={false}
           value={Phone}
           maxLength={12}
           keyboardType='numeric'
         />
       </View>
       }
+      <TouchableWithoutFeedback onPress={() => {profile.Exit(), navigation.navigate('Menu')}}>
+        <View style={styles.RegButton}>
+          <Text style={styles.RegButtonText}>{"Выйти"}</Text>
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
   }

@@ -8,7 +8,7 @@ export default function HistoryOrders() {
   
   return (
     <View style={styles.container}>
-    <Header leftText={"< Профиль"} centerText={""} rightText={"300 Б"} leftActive={navigation.goBack}/>
+    <Header leftText={"< Профиль"} centerText={""} rightText={"300 D"} leftActive={navigation.goBack}/>
       <ScrollView>
         <Text>HistoryOrders</Text>
       </ScrollView>

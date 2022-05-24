@@ -71,8 +71,10 @@ const Product = observer((props) => {
 
 const styles = StyleSheet.create({
   Container:{
-    marginVertical: 20,
+    paddingVertical: 20,
     flexDirection: "row",
+    borderBottomWidth: 1,
+    borderColor: "#E7E7E7",
   },
   Image:{
     width: 140,
@@ -80,12 +82,12 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   Text: {
-    marginLeft: 16,
+    marginLeft: 10,
     width: "50%",
   },
   Name: {
     width: 170,
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: "bold",
     fontFamily: "Raleway_600SemiBold"
   },
@@ -104,9 +106,10 @@ const styles = StyleSheet.create({
   PriceText: {
     width: "100%",
     height: "100%",
-    color: "#BC3B28",
-    fontSize: 14,
-    lineHeight: 25
+    color: "#202020",
+    fontSize: 15,
+    lineHeight: 25,
+    fontFamily: "Raleway_600SemiBold",
   },
   ChangeNumberPanel: {
     height: 30,

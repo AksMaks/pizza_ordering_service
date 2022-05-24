@@ -39,7 +39,7 @@ export default function App() {
     await AsyncStorage.setItem("user", "MAKS1")
     console.log(await AsyncStorage.getItem("user"))
 
-    await AsyncStorage.setItem("IdUser", "39")
+    await AsyncStorage.setItem("IdUser", "42")
     let IdUser = await AsyncStorage.getItem("IdUser")
     
     console.log(IdUser)

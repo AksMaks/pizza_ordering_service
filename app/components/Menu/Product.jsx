@@ -27,8 +27,7 @@ const Product = (props) => {
           <Text style={styles.Name}>{props.Name}</Text>
           {props.Description && <Text style={styles.Description}>{props.Description}</Text>}
           <View style={styles.Price}>
-            <Text style={styles.PriceText}>{"от " + props.Price + "р"}</Text>
-            <View style={{marginLeft: 5}}><Arrow color={"#BC3B28"}/></View>
+            <Text style={styles.PriceText}>{"от " + props.Price + "р "}<Arrow color={"#BC3B28"}/></Text>
           </View>
         </View>
       </View>  
@@ -39,8 +38,10 @@ const Product = (props) => {
 
 const styles = StyleSheet.create({
   Container:{
-    marginVertical: 20,
+    paddingVertical: 20,
     flexDirection: "row",
+    borderBottomWidth: 1,
+    borderColor: "#E7E7E7",
   },
   Image:{
     width: 140,
@@ -58,29 +59,30 @@ const styles = StyleSheet.create({
   },
   Description: {
     width: 170,
-    maxHeight: 72,
+    maxHeight: 55,
     fontSize: 12,
+    lineHeight: 18,
     color: "#808080",
-    marginTop: 5
+    marginTop: 5,
+    borderWidth: 0,
+    borderColor: "#BC3B28",
   },
   Price: {
-    width: 73,
-    height: 30,
-    borderWidth: 1,
-    borderColor: "#BC3B28",
-    borderRadius: 7,
+    height: 32,
     marginTop: 10,
-    flexDirection: "row",
-    justifyContent: "center",
-    paddingRight: 10
+    alignItems: "flex-start",
   },
   PriceText: {
-    width: "100%",
+    textAlignVertical: "center",
     height: "100%",
     color: "#BC3B28",
     fontSize: 14,
-    lineHeight: 25,
-    paddingLeft: 5
+    lineHeight: 16,
+    paddingLeft: 12,
+    paddingRight: 10,
+    borderWidth: 1,
+    borderColor: "#BC3B28",
+    borderRadius: 7,
   }
 });
 

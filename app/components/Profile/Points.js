@@ -4,7 +4,7 @@ import { useNavigation} from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import { v4 as uuidv4 } from 'uuid';
 
-import Header from '../header/header';
+import Header from '../header/header2';
 
 import {
   useFonts,
@@ -24,10 +24,14 @@ export default function Points() {
   } else {
     return (
       <View style={styles.container}>
-        <Header leftText={"< Назад"} centerText={""} rightText={"300 Б"} leftActive={navigation.goBack}/>
+        <Header leftText={"< Назад"} centerText={""} rightText={"300 D"} leftActive={navigation.goBack}/>
         <ScrollView>
           <Text style={styles.Title}>Кэшбек система</Text>
-          <Text>Какой-то текст что система делится на уровни</Text>
+          <View key={uuidv4()} style={styles.LevelHeader}>
+            <Text>Уровень</Text>
+            <Text>Процент</Text>
+            <Text>Уловие перехода</Text>
+          </View>
           {levels.data.map(el => {
             return (
               <View key={uuidv4()} style={styles.Level}>
@@ -54,8 +58,18 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginVertical: 20
   },
-  Level: {
+  LevelHeader: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    fontFamily: "Raleway_600SemiBold",
+    borderBottomWidth: 1,
+    borderColor: "#d0d0d0",
+  },
+  Level: {
+    marginTop: 5,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderColor: "#E7E7E7",
   }
 });

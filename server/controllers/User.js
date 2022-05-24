@@ -124,7 +124,8 @@ class controller{
   GetCode = async (data) => {
     let Response = {}
     const {Phone} = data
-    let code = Math.round(Math.random() * (9999 - 1000) + 1000).toString()
+    //let code = Math.round(Math.random() * (9999 - 1000) + 1000).toString()
+    let code = 1234
     let hashPassword = bcript.hashSync(code, 5)
     
     await db.sequelize.transaction(async  transaction => {

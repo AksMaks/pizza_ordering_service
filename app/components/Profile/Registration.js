@@ -11,7 +11,7 @@ import {
 } from '@expo-google-fonts/raleway';
 
 import Arrow from '../../assets/Profile/Arrow'
-import Header from '../header/header';
+import Header from '../header/header2';
 import profile from '../../store/profile';
 
 const CodeInput = observer((props) => {
@@ -23,16 +23,6 @@ const CodeInput = observer((props) => {
   let [fontsLoaded] = useFonts({
     Raleway_600SemiBold
   });
-
-  useEffect(() => {
-    if(time != 0){
-      setTimeout(() => {
-        setTime(time - 1)
-      }, 1000)
-    }else{
-      setDisabled(false)
-    }
-  }, [time])
 
   const repeat = () =>{
     setTime(60)
@@ -50,6 +40,22 @@ const CodeInput = observer((props) => {
       })
     })
   }
+
+  useEffect(() => {
+    if(time != 0){
+      setTimeout(() => {
+        setTime(time - 1)
+      }, 1000)
+    }else{
+      setDisabled(false)
+    }
+  }, [time])
+
+  useEffect(() => {
+    if(code >= 1000 && code <= 9999){
+      Auth()
+    }
+  }, [code])
   
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -81,11 +87,13 @@ const CodeInput = observer((props) => {
               <Text style={[styles.OrderButtonText, {color: !disabled? "#FFFFFF": "#959595"}]}>{"Получить новый код"}</Text>
             </View>
           </TouchableWithoutFeedback>
+          {false &&
           <TouchableWithoutFeedback onPress={() => Auth()}>
             <View style={[styles.AuthButton]}>
               <Text style={[styles.AuthButtonText]}>{"Отправить код"}</Text>
             </View>
           </TouchableWithoutFeedback>
+          }
         </View>
       </View>
     );
@@ -125,11 +133,12 @@ const PhoneInput = observer((props) => {
           />
         </View>
         
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('RegPhoneInput')}>
+        {false && <TouchableWithoutFeedback onPress={() => navigation.navigate('RegPhoneInput')}>
           <View style={styles.RegButton}>
             <Text style={styles.RegButtonText}>{"Регистация"}</Text>
           </View>
         </TouchableWithoutFeedback>
+        }
         <View style={{position: "absolute", bottom: 0, left: 20}}>
           <Text style={{marginHorizontal: 27, textAlign: "center", color: "#959595", fontSize: 12}}>Продолжая, вы соглашаетесь с политикой конфиденциальности</Text>
           <TouchableWithoutFeedback onPress={() => sendNumber()}>
