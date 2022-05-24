@@ -46,7 +46,6 @@ const AuthForm = (props) => {
               component={renderField} 
               label="Телефон"
               validate={[ required, phoneMin, phoneMax]}
-              normalize={normalizePhone}
             />
           </div>
           <div className={s.FormItem}>

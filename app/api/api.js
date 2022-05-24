@@ -11,7 +11,7 @@ const createAlert = () => {
     { text: 'OK', onPress: () => console.log('OK Pressed') },
   ]);
 }
-const UrlServer = "http://178.154.244.120:5000"
+const UrlServer = "http://185.178.46.27:5000"
 const instance = axios.create({
   baseURL: UrlServer+'/api',
 })
